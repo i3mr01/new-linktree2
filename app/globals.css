@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* HSL tokens */
+  --background: 0 0% 100%;
+  --foreground: 222.2 47.4% 11.2%;
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 47.4% 11.2%;
+  --border: 214.3 31.8% 91.4%;
+
+  /* Accents (chill & modern) */
+  --primary: 221 83% 53%; /* blue-600 */
+  --primary-foreground: 210 40% 98%;
+  --secondary: 262 83% 58%; /* violet-600 */
+  --secondary-foreground: 210 40% 98%;
+  --accent: 200 94% 86%; /* sky-200 */
+  --accent-foreground: 222.2 47.4% 11.2%;
+  --accent2: 174 70% 41%; /* teal-500 */
+  --accent2-foreground: 210 40% 98%;
+
+  /* Gradients */
+  --gradient-from: hsl(221 83% 53% / 1);
+  --gradient-to: hsl(262 83% 58% / 1);
+
+  /* Glassmorphism */
+  --glass-bg: 0 0% 100% / 0.6;
+  --glass-border: 0 0% 100% / 0.3;
+  --glass-blur: 12px;
+}
+
+.dark {
+  --background: 224 71% 4%;
+  --foreground: 213 31% 91%;
+  --muted: 223 47% 11%;
+  --muted-foreground: 215 20.2% 65.1%;
+  --card: 222 47% 7%;
+  --card-foreground: 213 31% 91%;
+  --border: 216 34% 17%;
+
+  --primary: 217 91% 60%;
+  --primary-foreground: 222.2 47.4% 11.2%;
+  --secondary: 259 94% 61%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+  --accent: 215 27.9% 16.9%;
+  --accent-foreground: 213 31% 91%;
+  --accent2: 172 66% 50%;
+  --accent2-foreground: 224 71% 4%;
+
+  --gradient-from: hsl(217 91% 60% / 1);
+  --gradient-to: hsl(259 94% 61% / 1);
+
+  --glass-bg: 0 0% 7% / 0.5;
+  --glass-border: 0 0% 100% / 0.1;
+}
+
+html, body, :root {
+  height: 100%;
+}
+
+body {
+  color: hsl(var(--foreground));
+  background: hsl(var(--background));
+}
+
+/* Base focus styles for accessibility */
+@layer base {
+  *:focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 2px;
+  }
+}
+
+/* Components */
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 font-medium shadow-subtle transition-colors;
+  }
+  .btn-primary {
+    @apply btn bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] hover:brightness-105;
+  }
+  .btn-outline {
+    @apply btn border border-[hsl(var(--border))] text-[hsl(var(--foreground))] hover:bg-[hsl(var(--muted))];
+  }
+
+  .card {
+    @apply rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] text-[hsl(var(--card-foreground))] shadow-soft;
+  }
+  .glass {
+    background: hsl(var(--card) / 0.5);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    box-shadow: 0 10px 30px hsl(215 27% 16% / 0.15);
+    border: 1px solid hsl(var(--glass-border));
+    border-radius: 16px;
+  }
+}
+

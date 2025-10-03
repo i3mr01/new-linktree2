@@ -1,0 +1,33 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { getSupabaseBrowserClient } from "@/lib/supabase";
+
+export function useUser() {
+  const supabase = getSupabaseBrowserClient();
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<ReturnType<typeof supabase.auth.getUser> extends Promise<infer _T> ? any : any>(null);
+
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      const { data } = await supabase.auth.getUser();
+      if (mounted) {
+        setUser(data.user ?? null);
+        setLoading(false);
+      }
+    })();
+
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+    return () => {
+      mounted = false;
+      sub.subscription.unsubscribe();
+    };
+  }, [supabase]);
+
+  return { user, loading } as const;
+}
+
+
