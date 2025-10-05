@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
+import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, type DragEndEvent } from "@dnd-kit/core";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import LinkItem, { type LinkRecord } from "./LinkItem";
 import LinkModal from "./LinkModal";
@@ -34,11 +34,13 @@ export default function DashboardClient() {
     useSensor(KeyboardSensor)
   );
 
-  function handleDragEnd(event: { active: { id: string }; over: { id: string } | null }) {
+  function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
-    const oldIndex = links.findIndex((l) => l.id === active.id);
-    const newIndex = links.findIndex((l) => l.id === over.id);
+    const activeId = String(active.id);
+    const overId = String(over.id);
+    const oldIndex = links.findIndex((l) => l.id === activeId);
+    const newIndex = links.findIndex((l) => l.id === overId);
     const prev = links;
     const reordered = arrayMove(prev, oldIndex, newIndex).map((l, idx) => ({ ...l, order: idx }));
 
@@ -46,7 +48,7 @@ export default function DashboardClient() {
     optimisticUpdate(setLinks, () => reordered);
 
     // persist
-    fetch(`/api/links/${active.id}`, {
+    fetch(`/api/links/${activeId}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ order: newIndex })
