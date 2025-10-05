@@ -4,7 +4,7 @@ test('sign up, create link, visit profile, click increments analytics', async ({
   // NOTE: This is a high-level flow. In real projects, integrate Supabase auth UI interactions.
   // 1. Go to login
   await page.goto('/login');
-  await expect(page).toHaveTitle(/Linkflow/i);
+  await expect(page).toHaveTitle(/Sign in/i);
 
   // This test assumes you have a seeded authenticated session or mock auth in CI.
   // Optionally, inject a session cookie here for Supabase.
