@@ -31,7 +31,7 @@ export async function PATCH(request: Request, { params }: Params) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 
-  const data: any = { ...parsed.data };
+  const data: Partial<z.infer<typeof UpdateLinkSchema>> & { flagged?: boolean; flaggedReason?: string | null } = { ...parsed.data };
   if (parsed.data.url) {
     data.flagged = isBlacklisted(parsed.data.url);
     data.flaggedReason = data.flagged ? "Domain blacklisted" : null;

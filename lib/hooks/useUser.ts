@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { getSupabaseBrowserClient } from "@/lib/supabase";
+import type { User } from "@supabase/supabase-js";
 
 export function useUser() {
   const supabase = getSupabaseBrowserClient();
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<ReturnType<typeof supabase.auth.getUser> extends Promise<infer _T> ? any : any>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     let mounted = true;

@@ -24,7 +24,7 @@ export async function GET(_req: NextRequest, { params }: { params: { id: string 
 
   const [total, byDay, topReferrers, topDevices] = await Promise.all([
     prisma.clickAnalytics.count({ where: { linkId: link.id, createdAt: { gte: since } } }),
-    prisma.$queryRawUnsafe<{ day: string; count: number }[]>(
+    prisma.$queryRawUnsafe(
       `SELECT to_char(date_trunc('day', "createdAt"),'YYYY-MM-DD') as day, count(*)::int as count
        FROM "ClickAnalytics"
        WHERE "linkId" = $1 AND "createdAt" >= $2
@@ -33,7 +33,7 @@ export async function GET(_req: NextRequest, { params }: { params: { id: string 
       link.id,
       since
     ),
-    prisma.$queryRawUnsafe<{ referrer: string; count: number }[]>(
+    prisma.$queryRawUnsafe(
       `SELECT coalesce("referrer", 'direct') as referrer, count(*)::int as count
        FROM "ClickAnalytics"
        WHERE "linkId" = $1 AND "createdAt" >= $2
@@ -43,7 +43,7 @@ export async function GET(_req: NextRequest, { params }: { params: { id: string 
       link.id,
       since
     ),
-    prisma.$queryRawUnsafe<{ device: string; count: number }[]>(
+    prisma.$queryRawUnsafe(
       `SELECT
          CASE
            WHEN "userAgent" ILIKE '%mobile%' THEN 'Mobile'

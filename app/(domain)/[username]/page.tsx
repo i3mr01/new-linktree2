@@ -1,9 +1,9 @@
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
-import type { Metadata, ResolvingMetadata } from "next";
-import Link from "next/link";
+import type { Metadata } from "next";
 import LinkList from "@/components/LinkList";
 
+export const dynamic = 'force-dynamic';
 export const revalidate = 60;
 
 type PageProps = {
@@ -11,8 +11,7 @@ type PageProps = {
 };
 
 export async function generateMetadata(
-  { params }: PageProps,
-  _parent: ResolvingMetadata
+  { params }: PageProps
 ): Promise<Metadata> {
   const user = await prisma.user.findUnique({ where: { username: params.username } });
   if (!user) return {};
@@ -91,5 +90,3 @@ export default async function PublicProfilePage({ params }: PageProps) {
     </main>
   );
 }
-
-

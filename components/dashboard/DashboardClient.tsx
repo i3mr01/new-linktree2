@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import LinkItem, { type LinkRecord } from "./LinkItem";
@@ -34,7 +34,7 @@ export default function DashboardClient() {
     useSensor(KeyboardSensor)
   );
 
-  function handleDragEnd(event: any) {
+  function handleDragEnd(event: { active: { id: string }; over: { id: string } | null }) {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
     const oldIndex = links.findIndex((l) => l.id === active.id);
@@ -60,7 +60,7 @@ export default function DashboardClient() {
 
   async function saveLink(payload: { id?: string; title: string; url: string; description?: string | null; visibleFrom?: string | null; visibleTo?: string | null; }) {
     if (payload.id) {
-      const optimistic = links.map((l) => (l.id === payload.id ? { ...l, ...payload } as any : l));
+      const optimistic: LinkRecord[] = links.map((l) => (l.id === payload.id ? { ...l, ...payload } as LinkRecord : l));
       const snapshot = links;
       setLinks(optimistic);
       const res = await fetch(`/api/links/${payload.id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });

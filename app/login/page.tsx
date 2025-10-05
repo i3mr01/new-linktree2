@@ -1,17 +1,33 @@
 "use client";
 
-import { FormEvent, useState } from "react";
-import { getSupabaseBrowserClient } from "@/lib/supabase";
+import { FormEvent, useState, useEffect } from "react";
+import type { SupabaseClient } from "@supabase/supabase-js";
+import { getSupabaseBrowserClient } from "@/lib/supabase-client";
+
+export const dynamic = 'force-dynamic';
 
 export default function LoginPage() {
-  const supabase = getSupabaseBrowserClient();
+  const [supabase, setSupabase] = useState<SupabaseClient | null>(null);
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Only initialize Supabase on the client side
+    try {
+      setSupabase(getSupabaseBrowserClient());
+    } catch {
+      setError("Failed to initialize authentication. Please check your configuration.");
+    }
+  }, []);
   const [loading, setLoading] = useState(false);
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
+    if (!supabase) {
+      setError("Authentication not initialized. Please refresh the page.");
+      return;
+    }
     setMessage(null);
     setError(null);
     setLoading(true);
@@ -22,9 +38,26 @@ export default function LoginPage() {
   }
 
   async function signInWithProvider(provider: "github" | "google") {
+    if (!supabase) {
+      setError("Authentication not initialized. Please refresh the page.");
+      return;
+    }
     setError(null);
     const { error } = await supabase.auth.signInWithOAuth({ provider, options: { redirectTo: `${window.location.origin}/dashboard` } });
     if (error) setError(error.message);
+  }
+
+  if (!supabase) {
+    return (
+      <main className="min-h-screen flex items-center justify-center p-6">
+        <div className="card w-full max-w-md p-6 space-y-6">
+          <div className="text-center space-y-2">
+            <h1 className="text-2xl font-semibold">Loading...</h1>
+            <p className="text-sm text-muted-foreground">Initializing authentication...</p>
+          </div>
+        </div>
+      </main>
+    );
   }
 
   return (

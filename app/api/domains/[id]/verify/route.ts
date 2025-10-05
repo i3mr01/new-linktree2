@@ -21,7 +21,7 @@ export async function POST(_req: Request, { params }: { params: { id: string } }
     if (!verified) return NextResponse.json({ verified: false, expected }, { status: 200 });
     const updated = await prisma.domain.update({ where: { id: record.id }, data: { status: "VERIFIED", verifiedAt: new Date() } });
     return NextResponse.json({ verified: true, domain: updated });
-  } catch (e) {
+  } catch {
     return NextResponse.json({ verified: false, error: "DNS lookup failed" }, { status: 200 });
   }
 }
