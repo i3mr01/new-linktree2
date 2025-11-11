@@ -9,6 +9,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   onAuthStateChanged,
+  FirebaseError,
 } from "firebase/auth";
 
 export default function LoginPage() {
@@ -59,8 +60,9 @@ export default function LoginPage() {
         await signInWithEmailAndPassword(auth, email, password);
       }
       // Auth state change will handle redirect
-    } catch (err: any) {
-      setError(err.message || "Authentication failed");
+    } catch (err) {
+      const errorMessage = err instanceof FirebaseError ? err.message : "Authentication failed";
+      setError(errorMessage);
       setLoading(false);
     }
   };
@@ -78,8 +80,9 @@ export default function LoginPage() {
       const provider = new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
       // Auth state change will handle redirect
-    } catch (err: any) {
-      setError(err.message || "Google authentication failed");
+    } catch (err) {
+      const errorMessage = err instanceof FirebaseError ? err.message : "Google authentication failed";
+      setError(errorMessage);
       setLoading(false);
     }
   };

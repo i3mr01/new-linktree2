@@ -1,5 +1,3 @@
-import { auth } from "@/lib/firebase/client";
-import { adminAuth } from "@/lib/firebase/admin";
 import { cookies } from "next/headers";
 
 /**

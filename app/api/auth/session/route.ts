@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
         email: decodedToken.email,
       },
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error("Session error:", error);
     return NextResponse.json({ error: "Invalid token" }, { status: 401 });
   }

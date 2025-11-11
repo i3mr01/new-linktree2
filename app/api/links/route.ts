@@ -1,11 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { isBlacklisted, SafeLinkSchema } from "@/lib/security";
 import { getCurrentUser } from "@/lib/auth";
 
 const CreateLinkSchema = SafeLinkSchema;
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   // No authentication required - get all links
   const links = await prisma.link.findMany({ orderBy: { order: "asc" } });
   return NextResponse.json({ links });
