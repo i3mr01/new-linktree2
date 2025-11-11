@@ -114,7 +114,7 @@ export default function HomePage() {
                 },
               ].map((testimonial, idx) => (
                 <div key={idx} className="p-6 bg-white rounded-xl border border-gray-200">
-                  <p className="text-gray-700 mb-4 italic">"{testimonial.quote}"</p>
+                  <p className="text-gray-700 mb-4 italic">&ldquo;{testimonial.quote}&rdquo;</p>
                   <div>
                     <p className="font-semibold">{testimonial.author}</p>
                     <p className="text-sm text-gray-600">{testimonial.role}</p>
@@ -169,7 +169,7 @@ export default function HomePage() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-4xl sm:text-5xl font-bold mb-4">Simple, transparent pricing</h2>
-              <p className="text-xl text-gray-600">Start free, upgrade when you're ready</p>
+              <p className="text-xl text-gray-600">Start free, upgrade when you&apos;re ready</p>
             </div>
 
             <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">

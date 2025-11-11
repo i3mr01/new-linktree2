@@ -38,7 +38,8 @@ export async function PATCH(request: Request) {
   }
 
   const json = await request.json();
-  let { username, displayName, bio, avatar, template, theme } = json;
+  let { username } = json;
+  const { displayName, bio, avatar, template, theme } = json;
 
   // Validate and normalize username
   if (username !== undefined && username !== null) {
