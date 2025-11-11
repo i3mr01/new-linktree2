@@ -1,11 +1,11 @@
-import { redirect } from "next/navigation";
-import { requireUserServer } from "@/lib/auth";
 import DashboardClient from "@/components/dashboard/DashboardClient";
+import { getCurrentUser } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 export default async function DashboardPage() {
-  try {
-    await requireUserServer();
-  } catch {
+  const user = await getCurrentUser();
+
+  if (!user) {
     redirect("/login");
   }
 

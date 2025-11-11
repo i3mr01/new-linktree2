@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 import { isBlacklisted, sanitizeText } from "@/lib/security";
-import { getSupabaseServerClient } from "@/lib/supabase";
+import { getCurrentUser } from "@/lib/auth";
 
 const UpdateLinkSchema = z.object({
   title: z.string().min(1).max(120).optional().transform((v) => (v ? sanitizeText(v) : v)),
@@ -14,11 +14,11 @@ const UpdateLinkSchema = z.object({
 type Params = { params: { id: string } };
 
 export async function PATCH(request: Request, { params }: Params) {
-  const supabase = getSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  // Require authentication for updating links
+  const user = await getCurrentUser();
+  if (!user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
   const json = await request.json();
   const parsed = UpdateLinkSchema.safeParse(json);
@@ -27,7 +27,7 @@ export async function PATCH(request: Request, { params }: Params) {
   }
 
   const link = await prisma.link.findUnique({ where: { id: params.id } });
-  if (!link || link.userId !== user.id) {
+  if (!link) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 
@@ -41,14 +41,14 @@ export async function PATCH(request: Request, { params }: Params) {
 }
 
 export async function DELETE(_request: Request, { params }: Params) {
-  const supabase = getSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  // Require authentication for deleting links
+  const user = await getCurrentUser();
+  if (!user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
   const link = await prisma.link.findUnique({ where: { id: params.id } });
-  if (!link || link.userId !== user.id) {
+  if (!link) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 

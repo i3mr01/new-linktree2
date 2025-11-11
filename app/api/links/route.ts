@@ -1,33 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getSupabaseServerClient } from "@/lib/supabase";
 import { isBlacklisted, SafeLinkSchema } from "@/lib/security";
+import { getCurrentUser } from "@/lib/auth";
 
 const CreateLinkSchema = SafeLinkSchema;
 
 export async function GET(request: NextRequest) {
-  const supabase = getSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-
-  const { searchParams } = new URL(request.url);
-  const userId = searchParams.get("userId") || user.id;
-  if (userId !== user.id) {
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-  }
-
-  const links = await prisma.link.findMany({ where: { userId }, orderBy: { order: "asc" } });
+  // No authentication required - get all links
+  const links = await prisma.link.findMany({ orderBy: { order: "asc" } });
   return NextResponse.json({ links });
 }
 
 export async function POST(request: Request) {
-  const supabase = getSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  // Require authentication for creating links
+  const user = await getCurrentUser();
+  if (!user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
   const json = await request.json();
   const parsed = CreateLinkSchema.safeParse(json);
@@ -37,7 +26,6 @@ export async function POST(request: Request) {
 
   const newLink = await prisma.link.create({
     data: {
-      userId: user.id,
       title: parsed.data.title,
       url: parsed.data.url,
       order: parsed.data.order ?? 0,

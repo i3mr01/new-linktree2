@@ -1,28 +1,43 @@
-"use client";
+import LinkList from "@/components/LinkList";
+import { prisma } from "@/lib/prisma";
 
-import Link from "next/link";
-import { motion } from "framer-motion";
+export default async function HomePage() {
+  const links = await prisma.link.findMany({ 
+    where: { isActive: true }, 
+    orderBy: { order: "asc" } 
+  });
 
-export default function MarketingPage() {
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center px-6 text-center">
-      <motion.h1
-        className="text-4xl md:text-6xl font-bold mb-6"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
-        Linkflow
-      </motion.h1>
-      <p className="text-gray-600 max-w-xl mb-8">
-        A clean, extendable link-in-bio with analytics, built on Next.js App Router.
-      </p>
-      <div className="flex gap-4">
-        <Link className="px-4 py-2 bg-black text-white rounded" href="/dashboard">
-          Go to Dashboard
-        </Link>
-        <Link className="px-4 py-2 border rounded" href="/amr">
-          View Example Profile
-        </Link>
+    <main className="min-h-screen flex flex-col items-center justify-start px-6 py-16">
+      <div className="w-full max-w-md">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="h-12 w-12 rounded-full bg-gradient-to-r from-blue-500 to-purple-600" />
+          <div>
+            <h1 className="text-xl font-semibold">My Links</h1>
+            <p className="text-gray-600">Welcome to my link collection</p>
+          </div>
+        </div>
+        <section className="mb-6">
+          <div className="glass p-4">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-xl bg-gradient-primary" />
+              <div>
+                <div className="font-medium">Share Preview</div>
+                <div className="text-sm text-muted-foreground truncate max-w-xs">My Link Collection</div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <LinkList links={links} />
+        <div className="mt-8 text-center space-x-4">
+          <a href="/dashboard" className="text-sm text-blue-600 hover:underline">
+            Manage Links →
+          </a>
+          <span className="text-gray-400">|</span>
+          <a href="/login" className="text-sm text-blue-600 hover:underline">
+            Sign In
+          </a>
+        </div>
       </div>
     </main>
   );

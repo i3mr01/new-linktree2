@@ -5,9 +5,7 @@ import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, us
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import LinkItem, { type LinkRecord } from "./LinkItem";
 import LinkModal from "./LinkModal";
-import ThemeEditor from "@/components/ThemeEditor";
-import DomainsPanel from "@/components/dashboard/DomainsPanel";
-import ProfileHeader from "@/components/ProfileHeader";
+import { useAuth } from "@/components/AuthProvider";
 
 function optimisticUpdate<T>(setState: React.Dispatch<React.SetStateAction<T>>, next: (prev: T) => T) {
   setState(next);
@@ -18,6 +16,7 @@ export default function DashboardClient() {
   const [modalOpen, setModalOpen] = useState(false);
   const [editItem, setEditItem] = useState<LinkRecord | null>(null);
   const [loading, setLoading] = useState(true);
+  const { user, signOut } = useAuth();
 
   useEffect(() => {
     (async () => {
@@ -112,10 +111,23 @@ export default function DashboardClient() {
   return (
     <main className="container py-6 grid lg:grid-cols-[320px,1fr] gap-6">
       <aside className="space-y-4">
-        <ProfileHeader username="me" name="My Name" bio="Short bio here" isOwner onEdit={() => setModalOpen(true)} />
-        <ThemeEditor onSave={async (vals) => { await fetch("/api/settings/theme", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(vals) }); }} />
-        <DomainsPanel />
-        <a className="btn-outline w-full text-center" href="/[username]" target="_blank" rel="noreferrer">Preview public page</a>
+        <div className="card p-4">
+          <h2 className="text-lg font-semibold mb-2">Link Management</h2>
+          <p className="text-sm text-muted-foreground">Manage your links and track analytics</p>
+          {user && (
+            <div className="mt-3 pt-3 border-t border-gray-200">
+              <p className="text-xs text-muted-foreground mb-1">Signed in as</p>
+              <p className="text-sm font-medium truncate">{user.email}</p>
+            </div>
+          )}
+        </div>
+        <a className="btn-outline w-full text-center" href="/" target="_blank" rel="noreferrer">Preview public page</a>
+        <button
+          onClick={signOut}
+          className="btn-outline w-full text-center text-red-600 hover:text-red-700 hover:border-red-300"
+        >
+          Sign Out
+        </button>
       </aside>
       <section>
         <div className="flex items-center justify-between mb-4">
