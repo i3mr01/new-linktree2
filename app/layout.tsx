@@ -2,12 +2,19 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { AuthProvider } from "@/components/AuthProvider";
+import SmoothScroll from "@/components/SmoothScroll";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: "Linkflow",
-  description: "Simple link-in-bio with analytics, powered by Next.js",
+  title: "Linkly - The Ultimate Link in Bio Platform",
+  description: "Create beautiful link-in-bio pages, track analytics, and grow your audience. Join millions of creators using Linkly.",
+  keywords: ["link in bio", "linktree alternative", "social media links", "bio link", "creator tools"],
+  openGraph: {
+    title: "Linkly - The Ultimate Link in Bio Platform",
+    description: "Create beautiful link-in-bio pages, track analytics, and grow your audience.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -16,9 +23,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={inter.variable}>
       <body className={inter.className}>
-        <AuthProvider>{children}</AuthProvider>
+        <SmoothScroll>
+          <AuthProvider>{children}</AuthProvider>
+        </SmoothScroll>
       </body>
     </html>
   );

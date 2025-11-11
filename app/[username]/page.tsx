@@ -49,7 +49,7 @@ export default async function UserProfilePage({ params }: Params) {
               {(user.displayName || user.username || user.email)?.[0]?.toUpperCase()}
             </div>
           )}
-          <h1 className="text-2xl font-bold mb-2">{user.displayName || user.username || "Linkflow User"}</h1>
+          <h1 className="text-2xl font-bold mb-2">{user.displayName || user.username || "Linkly User"}</h1>
           {user.bio && (
             <p className="text-gray-600 text-center max-w-sm">{user.bio}</p>
           )}
