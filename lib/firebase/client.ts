@@ -16,15 +16,32 @@ let auth: Auth | undefined;
 
 if (typeof window !== "undefined") {
   // Only initialize on client-side
-  if (firebaseConfig.apiKey && firebaseConfig.projectId) {
+  // Validate all required fields are present
+  const requiredFields = [
+    firebaseConfig.apiKey,
+    firebaseConfig.authDomain,
+    firebaseConfig.projectId,
+    firebaseConfig.storageBucket,
+    firebaseConfig.messagingSenderId,
+    firebaseConfig.appId,
+  ];
+
+  const missingFields = requiredFields
+    .map((field, index) => (!field ? Object.keys(firebaseConfig)[index] : null))
+    .filter(Boolean);
+
+  if (missingFields.length > 0) {
+    console.error(
+      `Firebase configuration is incomplete. Missing: ${missingFields.join(", ")}. ` +
+      "Please set all NEXT_PUBLIC_FIREBASE_* environment variables in Vercel."
+    );
+  } else {
     try {
       app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
       auth = getAuth(app);
     } catch (error) {
       console.error("Firebase client initialization error:", error);
     }
-  } else {
-    console.warn("Firebase configuration is missing. Please set NEXT_PUBLIC_FIREBASE_* environment variables.");
   }
 }
 
