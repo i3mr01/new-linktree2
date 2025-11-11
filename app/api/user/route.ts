@@ -20,8 +20,8 @@ export async function GET() {
       data: {
         firebaseId: firebaseUser.uid,
         email: firebaseUser.email || "",
-        displayName: firebaseUser.displayName || null,
-        avatar: firebaseUser.photoURL || null,
+        displayName: null,
+        avatar: null,
       },
     });
     return NextResponse.json({ user: newUser, links: [] });

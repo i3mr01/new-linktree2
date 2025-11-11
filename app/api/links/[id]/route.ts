@@ -47,27 +47,38 @@ export async function PATCH(request: Request, { params }: Params) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
-  const data: Partial<z.infer<typeof UpdateLinkSchema>> & { 
-    flagged?: boolean; 
+  // Build update data, converting datetime strings to Date objects
+  const updateData: {
+    title?: string;
+    url?: string;
+    description?: string | null;
+    order?: number;
+    isActive?: boolean;
+    flagged?: boolean;
     flaggedReason?: string | null;
     visibleFrom?: Date | null;
     visibleTo?: Date | null;
-  } = { ...parsed.data };
+  } = {};
   
-  if (parsed.data.url) {
-    data.flagged = isBlacklisted(parsed.data.url);
-    data.flaggedReason = data.flagged ? "Domain blacklisted" : null;
+  if (parsed.data.title !== undefined) updateData.title = parsed.data.title;
+  if (parsed.data.url !== undefined) {
+    updateData.url = parsed.data.url;
+    updateData.flagged = isBlacklisted(parsed.data.url);
+    updateData.flaggedReason = updateData.flagged ? "Domain blacklisted" : null;
   }
+  if (parsed.data.description !== undefined) updateData.description = parsed.data.description;
+  if (parsed.data.order !== undefined) updateData.order = parsed.data.order;
+  if (parsed.data.isActive !== undefined) updateData.isActive = parsed.data.isActive;
   
   // Convert datetime strings to Date objects
   if (parsed.data.visibleFrom !== undefined) {
-    data.visibleFrom = parsed.data.visibleFrom ? new Date(parsed.data.visibleFrom) : null;
+    updateData.visibleFrom = parsed.data.visibleFrom ? new Date(parsed.data.visibleFrom) : null;
   }
   if (parsed.data.visibleTo !== undefined) {
-    data.visibleTo = parsed.data.visibleTo ? new Date(parsed.data.visibleTo) : null;
+    updateData.visibleTo = parsed.data.visibleTo ? new Date(parsed.data.visibleTo) : null;
   }
   
-  const updated = await prisma.link.update({ where: { id: params.id }, data });
+  const updated = await prisma.link.update({ where: { id: params.id }, data: updateData });
   return NextResponse.json({ link: updated });
 }
 

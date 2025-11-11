@@ -32,8 +32,8 @@ export async function POST(request: Request) {
       data: {
         firebaseId: firebaseUser.uid,
         email: firebaseUser.email || "",
-        displayName: firebaseUser.displayName || null,
-        avatar: firebaseUser.photoURL || null,
+        displayName: null,
+        avatar: null,
       },
     });
   }
