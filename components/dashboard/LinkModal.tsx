@@ -44,11 +44,23 @@ export default function LinkModal({ open, initial, onClose, onSave }: LinkModalP
       {open ? (
         <motion.div className="fixed inset-0 z-50 grid place-items-center p-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
           <div className="absolute inset-0 bg-black/40" onClick={onClose} aria-hidden />
-          <motion.div className="card w-full max-w-lg p-4 relative z-10" initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 10, opacity: 0 }} role="dialog" aria-modal="true" aria-label={isEdit ? "Edit link" : "Add link"}>
+          <motion.div 
+            className="card w-full max-w-lg p-4 relative z-10" 
+            initial={{ y: 20, opacity: 0 }} 
+            animate={{ y: 0, opacity: 1 }} 
+            exit={{ y: 10, opacity: 0 }} 
+            role="dialog" 
+            aria-modal="true"
+            aria-labelledby="dialog-title"
+            aria-describedby="dialog-description"
+          >
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-lg font-medium">{isEdit ? "Edit link" : "Add link"}</h3>
+              <h3 id="dialog-title" className="text-lg font-medium">{isEdit ? "Edit link" : "Add link"}</h3>
               <button className="btn-outline px-2" onClick={onClose} aria-label="Close">✕</button>
             </div>
+            <p id="dialog-description" className="sr-only">
+              {isEdit ? "Edit the details of your link" : "Add a new link to your collection"}
+            </p>
             <div className="grid gap-3">
               <label className="text-sm">
                 <span className="text-muted-foreground">Title</span>

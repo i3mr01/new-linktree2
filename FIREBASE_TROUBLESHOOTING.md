@@ -1,5 +1,30 @@
 # Firebase Authentication Troubleshooting
 
+## Error: "auth/unauthorized-domain"
+
+This error means your Vercel domain is not authorized for OAuth operations in Firebase.
+
+### Quick Fix: Add Your Domain to Firebase
+
+1. Go to [Firebase Console](https://console.firebase.google.com/)
+2. Select your project: **newlinktree-9e94b**
+3. Click **"Authentication"** in the left sidebar
+4. Go to **"Settings"** tab
+5. Scroll down to **"Authorized domains"** section
+6. Click **"Add domain"**
+7. Enter your Vercel domain: **new-linktree2.vercel.app**
+8. Click **"Add"**
+9. If you have a custom domain, add that too (e.g., `yourdomain.com`)
+
+**Note:** Firebase automatically includes:
+- `localhost` (for local development)
+- `*.firebaseapp.com` (Firebase hosting)
+- `*.web.app` (Firebase hosting)
+
+You need to manually add your Vercel domain.
+
+---
+
 ## Error: "CONFIGURATION_NOT_FOUND"
 
 This error means Firebase Authentication is not enabled or configured in your Firebase project.
