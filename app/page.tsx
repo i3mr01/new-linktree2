@@ -1,11 +1,23 @@
 import LinkList from "@/components/LinkList";
 import { prisma } from "@/lib/prisma";
+import type { Link } from "@prisma/client";
+
+// Force dynamic rendering to avoid build-time database queries
+export const dynamic = 'force-dynamic';
 
 export default async function HomePage() {
-  const links = await prisma.link.findMany({ 
-    where: { isActive: true }, 
-    orderBy: { order: "asc" } 
-  });
+  let links: Link[] = [];
+  
+  try {
+    links = await prisma.link.findMany({ 
+      where: { isActive: true }, 
+      orderBy: { order: "asc" } 
+    });
+  } catch (error) {
+    // Gracefully handle database connection errors
+    console.error("Error fetching links:", error);
+    // Continue with empty links array
+  }
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-start px-6 py-16">
