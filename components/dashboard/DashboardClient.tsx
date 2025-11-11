@@ -5,14 +5,25 @@ import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, us
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import LinkItem, { type LinkRecord } from "./LinkItem";
 import LinkModal from "./LinkModal";
+import ProfileSettings from "./ProfileSettings";
 import { useAuth } from "@/components/AuthProvider";
 
 function optimisticUpdate<T>(setState: React.Dispatch<React.SetStateAction<T>>, next: (prev: T) => T) {
   setState(next);
 }
 
+type UserProfile = {
+  id: string;
+  username: string | null;
+  displayName: string | null;
+  bio: string | null;
+  avatar: string | null;
+  template: string;
+};
+
 export default function DashboardClient() {
   const [links, setLinks] = useState<LinkRecord[]>([]);
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [editItem, setEditItem] = useState<LinkRecord | null>(null);
   const [loading, setLoading] = useState(true);
@@ -21,9 +32,12 @@ export default function DashboardClient() {
   useEffect(() => {
     (async () => {
       setLoading(true);
-      const res = await fetch("/api/links");
-      const data = await res.json();
-      setLinks(data.links || []);
+      const res = await fetch("/api/user");
+      if (res.ok) {
+        const data = await res.json();
+        setLinks(data.links || []);
+        setUserProfile(data.user);
+      }
       setLoading(false);
     })();
   }, []);
@@ -108,32 +122,53 @@ export default function DashboardClient() {
     setModalOpen(true);
   }
 
+  const publicUrl = userProfile?.username 
+    ? `${typeof window !== 'undefined' ? window.location.origin : ''}/${userProfile.username}`
+    : null;
+
   return (
-    <main className="container py-6 grid lg:grid-cols-[320px,1fr] gap-6">
-      <aside className="space-y-4">
-        <div className="card p-4">
-          <h2 className="text-lg font-semibold mb-2">Link Management</h2>
-          <p className="text-sm text-muted-foreground">Manage your links and track analytics</p>
-          {user && (
-            <div className="mt-3 pt-3 border-t border-gray-200">
-              <p className="text-xs text-muted-foreground mb-1">Signed in as</p>
-              <p className="text-sm font-medium truncate">{user.email}</p>
+    <main className="container py-6 space-y-6">
+      {/* Profile Settings Section */}
+      {userProfile && (
+        <ProfileSettings
+          profile={userProfile}
+          onUpdate={(updated) => setUserProfile(updated)}
+        />
+      )}
+
+      <div className="grid lg:grid-cols-[320px,1fr] gap-6">
+        <aside className="space-y-4">
+          <div className="card p-4">
+            <h2 className="text-lg font-semibold mb-2">Link Management</h2>
+            <p className="text-sm text-muted-foreground">Manage your links and track analytics</p>
+            {user && (
+              <div className="mt-3 pt-3 border-t border-gray-200">
+                <p className="text-xs text-muted-foreground mb-1">Signed in as</p>
+                <p className="text-sm font-medium truncate">{user.email}</p>
+              </div>
+            )}
+          </div>
+          {publicUrl ? (
+            <a className="btn-outline w-full text-center" href={publicUrl} target="_blank" rel="noreferrer">
+              View public page
+            </a>
+          ) : (
+            <div className="btn-outline w-full text-center text-gray-400 cursor-not-allowed">
+              Set username to view page
             </div>
           )}
-        </div>
-        <a className="btn-outline w-full text-center" href="/" target="_blank" rel="noreferrer">Preview public page</a>
-        <button
-          onClick={signOut}
-          className="btn-outline w-full text-center text-red-600 hover:text-red-700 hover:border-red-300"
-        >
-          Sign Out
-        </button>
-      </aside>
-      <section>
-        <div className="flex items-center justify-between mb-4">
-          <h1 className="text-2xl font-semibold">Your Links</h1>
-          <button className="btn-primary" onClick={() => { setEditItem(null); setModalOpen(true); }}>Add link</button>
-        </div>
+          <button
+            onClick={signOut}
+            className="btn-outline w-full text-center text-red-600 hover:text-red-700 hover:border-red-300"
+          >
+            Sign Out
+          </button>
+        </aside>
+        <section>
+          <div className="flex items-center justify-between mb-4">
+            <h1 className="text-2xl font-semibold">Your Links</h1>
+            <button className="btn-primary" onClick={() => { setEditItem(null); setModalOpen(true); }}>Add link</button>
+          </div>
 
         {loading ? (
           <p className="text-muted-foreground">Loading...</p>
@@ -155,7 +190,8 @@ export default function DashboardClient() {
             </SortableContext>
           </DndContext>
         )}
-      </section>
+        </section>
+      </div>
 
       <LinkModal
         open={modalOpen}

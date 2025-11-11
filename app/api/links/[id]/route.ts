@@ -7,17 +7,28 @@ import { getCurrentUser } from "@/lib/auth";
 const UpdateLinkSchema = z.object({
   title: z.string().min(1).max(120).optional().transform((v) => (v ? sanitizeText(v) : v)),
   url: z.string().url().optional(),
+  description: z.string().max(200).optional().nullable().transform((v) => (v ? sanitizeText(v) : v)),
   order: z.number().int().optional(),
   isActive: z.boolean().optional(),
+  visibleFrom: z.string().datetime().optional().nullable(),
+  visibleTo: z.string().datetime().optional().nullable(),
 });
 
 type Params = { params: { id: string } };
 
 export async function PATCH(request: Request, { params }: Params) {
   // Require authentication for updating links
-  const user = await getCurrentUser();
-  if (!user) {
+  const firebaseUser = await getCurrentUser();
+  if (!firebaseUser) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  // Get user from database
+  const dbUser = await prisma.user.findUnique({
+    where: { firebaseId: firebaseUser.uid },
+  });
+  if (!dbUser) {
+    return NextResponse.json({ error: "User not found" }, { status: 404 });
   }
 
   const json = await request.json();
@@ -31,25 +42,58 @@ export async function PATCH(request: Request, { params }: Params) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 
-  const data: Partial<z.infer<typeof UpdateLinkSchema>> & { flagged?: boolean; flaggedReason?: string | null } = { ...parsed.data };
+  // Verify ownership
+  if (link.userId !== dbUser.id) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
+  const data: Partial<z.infer<typeof UpdateLinkSchema>> & { 
+    flagged?: boolean; 
+    flaggedReason?: string | null;
+    visibleFrom?: Date | null;
+    visibleTo?: Date | null;
+  } = { ...parsed.data };
+  
   if (parsed.data.url) {
     data.flagged = isBlacklisted(parsed.data.url);
     data.flaggedReason = data.flagged ? "Domain blacklisted" : null;
   }
+  
+  // Convert datetime strings to Date objects
+  if (parsed.data.visibleFrom !== undefined) {
+    data.visibleFrom = parsed.data.visibleFrom ? new Date(parsed.data.visibleFrom) : null;
+  }
+  if (parsed.data.visibleTo !== undefined) {
+    data.visibleTo = parsed.data.visibleTo ? new Date(parsed.data.visibleTo) : null;
+  }
+  
   const updated = await prisma.link.update({ where: { id: params.id }, data });
   return NextResponse.json({ link: updated });
 }
 
 export async function DELETE(_request: Request, { params }: Params) {
   // Require authentication for deleting links
-  const user = await getCurrentUser();
-  if (!user) {
+  const firebaseUser = await getCurrentUser();
+  if (!firebaseUser) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  // Get user from database
+  const dbUser = await prisma.user.findUnique({
+    where: { firebaseId: firebaseUser.uid },
+  });
+  if (!dbUser) {
+    return NextResponse.json({ error: "User not found" }, { status: 404 });
   }
 
   const link = await prisma.link.findUnique({ where: { id: params.id } });
   if (!link) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
+
+  // Verify ownership
+  if (link.userId !== dbUser.id) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
   await prisma.clickAnalytics.deleteMany({ where: { linkId: params.id } });
