@@ -9,8 +9,18 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   onAuthStateChanged,
-  FirebaseError,
 } from "firebase/auth";
+
+// Type guard to check if error is a Firebase error
+function isFirebaseError(error: unknown): error is { code: string; message: string } {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "code" in error &&
+    "message" in error &&
+    typeof (error as { code: unknown }).code === "string"
+  );
+}
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -61,7 +71,7 @@ export default function LoginPage() {
       }
       // Auth state change will handle redirect
     } catch (err) {
-      const errorMessage = err instanceof FirebaseError ? err.message : "Authentication failed";
+      const errorMessage = isFirebaseError(err) ? err.message : "Authentication failed";
       setError(errorMessage);
       setLoading(false);
     }
@@ -81,7 +91,7 @@ export default function LoginPage() {
       await signInWithPopup(auth, provider);
       // Auth state change will handle redirect
     } catch (err) {
-      const errorMessage = err instanceof FirebaseError ? err.message : "Google authentication failed";
+      const errorMessage = isFirebaseError(err) ? err.message : "Google authentication failed";
       setError(errorMessage);
       setLoading(false);
     }
