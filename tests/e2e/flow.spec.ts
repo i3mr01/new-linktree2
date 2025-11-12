@@ -4,8 +4,8 @@ test('sign up, create link, visit profile, click increments analytics', async ({
   // NOTE: This is a high-level flow. In real projects, integrate Firebase auth UI interactions.
   // 1. Go to login
   await page.goto('/login');
-  // Check for page title (Linkflow) or login page content
-  await expect(page).toHaveTitle(/Linkflow/i);
+  // Check for page title (Linkly) or login page content
+  await expect(page).toHaveTitle(/Linkly/i);
   // Verify we're on the login page by checking for login form elements
   await expect(page.getByText(/Sign in to your account|Create your account/i)).toBeVisible();
 
