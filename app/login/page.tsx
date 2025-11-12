@@ -1,17 +1,18 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { auth } from "@/lib/firebase/client";
 import {
   signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
   onAuthStateChanged,
 } from "firebase/auth";
-import { motion } from "framer-motion";
-import { ArrowRight, Mail, Lock } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight, Mail, Lock, User, Sparkles } from "lucide-react";
 
 // Type guard to check if error is a Firebase error
 function isFirebaseError(error: unknown): error is { code: string; message: string } {
@@ -25,6 +26,9 @@ function isFirebaseError(error: unknown): error is { code: string; message: stri
 }
 
 export default function LoginPage() {
+  const searchParams = useSearchParams();
+  const [isSignUp, setIsSignUp] = useState(searchParams?.get('mode') === 'signup');
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -64,7 +68,11 @@ export default function LoginPage() {
     setError(null);
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      if (isSignUp) {
+        await createUserWithEmailAndPassword(auth, email, password);
+      } else {
+        await signInWithEmailAndPassword(auth, email, password);
+      }
     } catch (err) {
       const errorMessage = isFirebaseError(err) ? err.message : "Authentication failed";
       setError(errorMessage);
@@ -91,36 +99,156 @@ export default function LoginPage() {
     }
   };
 
+  const toggleMode = () => {
+    setIsSignUp(!isSignUp);
+    setError(null);
+    setName("");
+    setEmail("");
+    setPassword("");
+  };
+
   return (
-    <div className="min-h-screen flex">
-      {/* Left Side - Form */}
-      <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 bg-white">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="w-full max-w-md"
-        >
+    <div className="min-h-screen flex relative overflow-hidden bg-white">
+      {/* Animated Background Gradient */}
+      <motion.div
+        initial={false}
+        animate={{
+          left: isSignUp ? '0%' : '50%',
+        }}
+        transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+        className="absolute top-0 bottom-0 w-1/2 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 hidden lg:block"
+      >
+        <div className="absolute inset-0 bg-grid-pattern opacity-10" />
+        
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={isSignUp ? 'signup-content' : 'login-content'}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="relative z-10 h-full flex flex-col items-center justify-center p-12 text-white"
+          >
+            <div className="text-center max-w-md">
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className="inline-block mb-6"
+              >
+                <Sparkles className="h-16 w-16" />
+              </motion.div>
+              
+              <h2 className="text-5xl font-bold mb-6">
+                {isSignUp ? 'Join Linkly today' : 'Welcome back'}
+              </h2>
+              <p className="text-xl text-white/90 mb-8">
+                {isSignUp
+                  ? 'Create your free account and start sharing everything you create in minutes.'
+                  : 'Sign in to continue managing your links and growing your audience.'}
+              </p>
+              
+              <div className="flex flex-col gap-4 text-left">
+                {(isSignUp
+                  ? ['Set up in 2 minutes', 'No credit card required', 'Unlimited everything', '100% free forever']
+                  : ['Unlimited links', 'Real-time analytics', 'Full customization', 'Track every click']
+                ).map((feature, idx) => (
+                  <motion.div
+                    key={feature}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: 0.5 + idx * 0.1 }}
+                    className="flex items-center gap-3"
+                  >
+                    <div className="h-6 w-6 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+                      <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span className="text-lg">{feature}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </motion.div>
+
+      {/* Form Side */}
+      <motion.div
+        initial={false}
+        animate={{
+          marginLeft: isSignUp ? '50%' : '0%',
+        }}
+        transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+        className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 relative z-20"
+      >
+        <div className="w-full max-w-md">
           <div className="text-center mb-8">
             <Link href="/" className="inline-block mb-8">
               <span className="text-3xl font-bold text-gray-900">Linkly</span>
             </Link>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome back</h1>
-            <p className="text-gray-600">Sign in to continue to your account</p>
+            
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={isSignUp ? 'signup-title' : 'login-title'}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+              >
+                <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                  {isSignUp ? 'Create your account' : 'Welcome back'}
+                </h1>
+                <p className="text-gray-600">
+                  {isSignUp ? 'Start your journey with Linkly' : 'Sign in to continue to your account'}
+                </p>
+              </motion.div>
+            </AnimatePresence>
           </div>
 
-          {error && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm"
-            >
-              {error}
-            </motion.div>
-          )}
+          <AnimatePresence mode="wait">
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm overflow-hidden"
+              >
+                {error}
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           <form onSubmit={handleEmailAuth} className="space-y-5">
-            <div>
+            <AnimatePresence mode="wait">
+              {isSignUp && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                    Full name
+                  </label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                    <input
+                      id="name"
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      required={isSignUp}
+                      className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                      placeholder="John Doe"
+                    />
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            <motion.div layout>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                 Email address
               </label>
@@ -136,16 +264,18 @@ export default function LoginPage() {
                   placeholder="you@example.com"
                 />
               </div>
-            </div>
+            </motion.div>
 
-            <div>
+            <motion.div layout>
               <div className="flex items-center justify-between mb-2">
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                   Password
                 </label>
-                <Link href="/forgot-password" className="text-sm text-blue-600 hover:text-blue-700">
-                  Forgot?
-                </Link>
+                {!isSignUp && (
+                  <Link href="/forgot-password" className="text-sm text-blue-600 hover:text-blue-700">
+                    Forgot?
+                  </Link>
+                )}
               </div>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -155,20 +285,38 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
+                  minLength={6}
                   className="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                   placeholder="••••••••"
                 />
               </div>
-            </div>
+              {isSignUp && (
+                <p className="mt-2 text-xs text-gray-500">Must be at least 6 characters</p>
+              )}
+            </motion.div>
 
-            <button
+            <motion.button
+              layout
               type="submit"
               disabled={loading}
               className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-4 rounded-xl font-semibold hover:shadow-xl hover:shadow-blue-500/25 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 transition-all duration-300 flex items-center justify-center gap-2"
             >
-              {loading ? "Signing in..." : "Sign in"}
-              {!loading && <ArrowRight className="h-5 w-5" />}
-            </button>
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={isSignUp ? 'signup-btn' : 'login-btn'}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.2 }}
+                  className="flex items-center gap-2"
+                >
+                  {loading
+                    ? isSignUp ? "Creating account..." : "Signing in..."
+                    : isSignUp ? "Create account" : "Sign in"}
+                  {!loading && <ArrowRight className="h-5 w-5" />}
+                </motion.span>
+              </AnimatePresence>
+            </motion.button>
           </form>
 
           <div className="mt-8">
@@ -208,55 +356,54 @@ export default function LoginPage() {
             </button>
           </div>
 
-          <p className="mt-8 text-center text-sm text-gray-600">
-            Don&apos;t have an account?{" "}
-            <Link href="/signup" className="font-semibold text-blue-600 hover:text-blue-700">
-              Sign up for free
-            </Link>
-          </p>
-        </motion.div>
-      </div>
-
-      {/* Right Side - Gradient Background */}
-      <div className="hidden lg:flex flex-1 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 relative overflow-hidden">
-        <div className="absolute inset-0 bg-grid-pattern opacity-10" />
-        <div className="relative z-10 flex flex-col items-center justify-center p-12 text-white">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-center"
-          >
-            <h2 className="text-5xl font-bold mb-6">Start growing today</h2>
-            <p className="text-xl text-white/90 mb-8 max-w-md mx-auto">
-              Join thousands using Linkly to share everything they create from one simple link.
-            </p>
-            <div className="flex flex-col gap-4 text-left max-w-md">
-              {[
-                "Unlimited links",
-                "Real-time analytics",
-                "Full customization",
-                "100% free forever",
-              ].map((feature, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 0.4 + idx * 0.1 }}
-                  className="flex items-center gap-3"
+          <motion.div layout className="mt-8 text-center">
+            <button
+              onClick={toggleMode}
+              className="text-sm text-gray-600"
+            >
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={isSignUp ? 'to-login' : 'to-signup'}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
                 >
-                  <div className="h-6 w-6 rounded-full bg-white/20 flex items-center justify-center">
-                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <span className="text-lg">{feature}</span>
-                </motion.div>
-              ))}
-            </div>
+                  {isSignUp ? (
+                    <>
+                      Already have an account?{" "}
+                      <span className="font-semibold text-blue-600 hover:text-blue-700">Sign in</span>
+                    </>
+                  ) : (
+                    <>
+                      Don&apos;t have an account?{" "}
+                      <span className="font-semibold text-blue-600 hover:text-blue-700">Sign up for free</span>
+                    </>
+                  )}
+                </motion.span>
+              </AnimatePresence>
+            </button>
           </motion.div>
+
+          {isSignUp && (
+            <motion.p
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="mt-6 text-center text-xs text-gray-500"
+            >
+              By signing up, you agree to our{" "}
+              <Link href="/terms" className="text-blue-600 hover:text-blue-700">
+                Terms
+              </Link>{" "}
+              and{" "}
+              <Link href="/privacy" className="text-blue-600 hover:text-blue-700">
+                Privacy Policy
+              </Link>
+            </motion.p>
+          )}
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
