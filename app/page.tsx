@@ -589,7 +589,7 @@ export default function HomePage() {
           <div className="grid md:grid-cols-4 gap-12 mb-12">
             <div>
               <div className="mb-6">
-                <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Linkly</span>
+                <span className="text-2xl font-bold text-white">Linkly</span>
               </div>
               <p className="text-sm leading-relaxed">
                 The ultimate link in bio platform for creators, influencers, and businesses.
