@@ -4,94 +4,45 @@ import { motion } from "framer-motion";
 
 export default function Loading() {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-white">
       <div className="text-center">
-        {/* Animated Logo */}
+        {/* Logo */}
         <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="mb-8"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-12"
         >
-          <h1 className="text-6xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-bold text-gray-900 tracking-tight">
             Linkly
           </h1>
         </motion.div>
 
-        {/* Animated Dots */}
-        <div className="flex items-center justify-center gap-2 mb-8">
-          {[0, 1, 2].map((index) => (
-            <motion.div
-              key={index}
-              initial={{ y: 0 }}
-              animate={{ y: [-10, 0, -10] }}
-              transition={{
-                duration: 1,
-                repeat: Infinity,
-                delay: index * 0.15,
-                ease: "easeInOut",
-              }}
-              className="w-3 h-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600"
-            />
-          ))}
-        </div>
-
-        {/* Progress Bar */}
-        <div className="w-64 h-1 bg-gray-200 rounded-full overflow-hidden mx-auto">
+        {/* Elegant Spinner */}
+        <div className="relative w-12 h-12 mx-auto mb-8">
           <motion.div
-            initial={{ x: "-100%" }}
-            animate={{ x: "100%" }}
+            animate={{ rotate: 360 }}
             transition={{
-              duration: 1.5,
+              duration: 1.2,
               repeat: Infinity,
-              ease: "easeInOut",
+              ease: "linear",
             }}
-            className="h-full w-1/3 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600"
-          />
+            className="absolute inset-0"
+          >
+            <div className="absolute inset-0 border-2 border-gray-200 rounded-full" />
+            <div className="absolute inset-0 border-2 border-transparent border-t-gray-900 rounded-full" />
+          </motion.div>
         </div>
 
-        {/* Loading Text */}
+        {/* Subtle Loading Text */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="mt-6 text-gray-600 text-sm"
+          transition={{ delay: 0.4, duration: 0.6 }}
+          className="text-sm text-gray-500 font-medium"
         >
-          Loading your experience...
+          Loading...
         </motion.p>
-      </div>
-
-      {/* Floating Particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => {
-          const randomX = Math.random() * 100;
-          const randomY = Math.random() * 100;
-          return (
-            <motion.div
-              key={i}
-              initial={{
-                x: `${randomX}vw`,
-                y: `${randomY}vh`,
-                scale: 0,
-              }}
-              animate={{
-                y: [`${randomY}vh`, `${Math.random() * 100}vh`],
-                scale: [0, 1, 0],
-                opacity: [0, 0.5, 0],
-              }}
-              transition={{
-                duration: Math.random() * 3 + 2,
-                repeat: Infinity,
-                delay: Math.random() * 2,
-              }}
-              className="absolute w-2 h-2 rounded-full bg-gradient-to-r from-blue-400 to-purple-400"
-              style={{
-                left: `${randomX}%`,
-                top: `${randomY}%`,
-              }}
-            />
-          );
-        })}
       </div>
     </div>
   );
