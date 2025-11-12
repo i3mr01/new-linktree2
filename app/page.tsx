@@ -5,7 +5,6 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import {
-  Sparkles,
   Link2,
   BarChart3,
   Palette,
@@ -171,8 +170,7 @@ export default function HomePage() {
                 transition={{ duration: 0.6 }}
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-50 border border-green-200 mb-8 hero-element"
               >
-                <Sparkles className="h-4 w-4 text-green-600" />
-                <span className="text-sm font-medium text-green-700">100% Free Forever - No Credit Card Required</span>
+                <span className="text-sm font-medium text-green-700">✨ 100% Free Forever - No Credit Card Required</span>
               </motion.div>
 
               <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 hero-element">
@@ -217,7 +215,7 @@ export default function HomePage() {
                 <div className="relative max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-2xl border border-gray-200">
                   <div className="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center">
                     <div className="text-center">
-                      <Sparkles className="h-16 w-16 text-blue-600 mx-auto mb-4" />
+                      <div className="text-6xl mb-4">🔗</div>
                       <p className="text-gray-600 font-medium">Your beautiful Linkly page preview</p>
                     </div>
                   </div>
@@ -590,11 +588,8 @@ export default function HomePage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-12 mb-12">
             <div>
-              <div className="flex items-center gap-2 mb-6">
-                <div className="h-10 w-10 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center">
-                  <Sparkles className="h-6 w-6 text-white" />
-                </div>
-                <span className="text-2xl font-bold text-white">Linkly</span>
+              <div className="mb-6">
+                <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Linkly</span>
               </div>
               <p className="text-sm leading-relaxed">
                 The ultimate link in bio platform for creators, influencers, and businesses.
