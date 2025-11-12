@@ -554,46 +554,42 @@ export default function HomePage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-32 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 text-white relative overflow-hidden">
-          <div className="absolute inset-0 bg-grid-pattern opacity-10" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+        <section className="py-32 bg-white relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 opacity-50" />
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
+              className="max-w-4xl mx-auto"
             >
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
-                Your links, your audience,
-                <br />
-                <span className="text-white/90">one simple link</span>
+              <h2 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+                Create your Linkly
               </h2>
-              <p className="text-xl text-white/80 mb-12 max-w-2xl mx-auto">
-                Join thousands using Linkly to share everything they create, curate, and sell from their social media.
+              <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
+                Join thousands sharing everything they create from one simple link
               </p>
               
-              <div className="max-w-md mx-auto">
-                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-2 border border-white/20 shadow-2xl">
-                  <div className="flex items-center gap-2 bg-white rounded-xl p-1">
-                    <div className="flex items-center gap-1 px-4 py-3 text-gray-500 font-medium text-lg">
-                      <span className="text-gray-400">linkly.to/</span>
-                    </div>
+              <div className="max-w-2xl mx-auto">
+                <div className="flex flex-col sm:flex-row items-center gap-3 p-3 bg-white rounded-2xl shadow-2xl border border-gray-200">
+                  <div className="flex items-center flex-1 w-full px-4 py-4 bg-gray-50 rounded-xl">
+                    <span className="text-gray-400 font-medium mr-2">linkly.to/</span>
                     <input
                       type="text"
                       placeholder="yourname"
-                      className="flex-1 px-2 py-3 text-gray-900 font-medium text-lg bg-transparent border-none outline-none placeholder:text-gray-400"
+                      className="flex-1 bg-transparent border-none outline-none text-gray-900 font-medium text-lg placeholder:text-gray-400"
                     />
-                    <Link
-                      href="/login"
-                      className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all whitespace-nowrap"
-                    >
-                      Claim yours
-                    </Link>
                   </div>
+                  <Link
+                    href="/login"
+                    className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-bold text-lg hover:shadow-xl hover:shadow-blue-500/25 hover:scale-105 transition-all duration-300 whitespace-nowrap"
+                  >
+                    Claim your link
+                  </Link>
                 </div>
-                <p className="text-sm text-white/60 mt-4">
-                  ✨ Free forever • No credit card required • Ready in 2 minutes
+                <p className="text-sm text-gray-500 mt-6">
+                  Free forever • No credit card • Set up in 2 minutes
                 </p>
               </div>
             </motion.div>
