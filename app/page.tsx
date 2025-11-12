@@ -124,33 +124,6 @@ export default function HomePage() {
     },
   ];
 
-  const faqs = [
-    {
-      question: "Why do I need a link in bio tool?",
-      answer:
-        "Every time you have something new to share, you have to update every single social media profile. A link in bio tool centralizes everything in one place. Update once, and it's live everywhere. Save time and never compromise on what you share.",
-    },
-    {
-      question: "Can I monetize my Linkly page?",
-      answer:
-        "Absolutely! You can add affiliate links, sell products, offer services, and collect payments directly through your Linkly page. Many creators see incredible results because it removes extra steps in the purchase process.",
-    },
-    {
-      question: "Is Linkly safe for all social media platforms?",
-      answer:
-        "Yes! Linkly is trusted by all major social platforms including Instagram, TikTok, Twitter, and YouTube. Our links are recognized and safe, giving your audience confidence when clicking.",
-    },
-    {
-      question: "How many links can I add?",
-      answer:
-        "For optimal conversion, we recommend 3-7 links. However, you can add as many as you need. Use our organization features like sections and priorities to guide visitors to what matters most.",
-    },
-    {
-      question: "Do I need a website to use Linkly?",
-      answer:
-        "Not at all! Linkly can serve as your complete online presence. Create a beautiful page in minutes without any technical knowledge. If you already have a website, you can easily integrate it into your Linkly page.",
-    },
-  ];
 
   return (
     <>
@@ -449,45 +422,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* FAQ Section */}
-        <section id="faq" className="py-32 bg-white">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="text-center mb-20"
-            >
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
-                <span className="bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-                  Questions?
-                </span>
-                <br />
-                <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  We&apos;ve got answers
-                </span>
-              </h2>
-            </motion.div>
-
-            <div className="max-w-3xl mx-auto space-y-4">
-              {faqs.map((faq, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: idx * 0.1 }}
-                  className="p-8 rounded-2xl border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all bg-white"
-                >
-                  <h3 className="text-xl font-bold mb-3 text-gray-900">{faq.question}</h3>
-                  <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* Pricing Section */}
         <section id="pricing" className="py-32 bg-gradient-to-br from-gray-50 to-blue-50/30">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -614,7 +548,7 @@ export default function HomePage() {
               <ul className="space-y-3 text-sm">
                 <li><Link href="#features" className="hover:text-white transition-colors">Features</Link></li>
                 <li><Link href="#pricing" className="hover:text-white transition-colors">Pricing</Link></li>
-                <li><Link href="#faq" className="hover:text-white transition-colors">FAQ</Link></li>
+                <li><Link href="/faq" className="hover:text-white transition-colors">FAQ</Link></li>
               </ul>
             </div>
             <div>
