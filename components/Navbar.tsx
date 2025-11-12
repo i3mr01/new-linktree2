@@ -30,14 +30,14 @@ export default function Navbar() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-white/80 backdrop-blur-xl border-b border-gray-200/50 shadow-sm"
-          : "bg-transparent"
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 lg:px-8 pt-4"
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+      <div className={`container mx-auto transition-all duration-300 rounded-2xl ${
+        isScrolled
+          ? "bg-white/90 backdrop-blur-xl shadow-lg border border-gray-200/50"
+          : "bg-white/60 backdrop-blur-md border border-gray-200/30"
+      }`}>
+        <div className="flex items-center justify-between h-16 px-6">
           <Link href="/" className="flex items-center group">
             <span className="text-2xl font-bold text-gray-900 hover:text-gray-700 transition-colors">
               Linkly
@@ -57,20 +57,20 @@ export default function Navbar() {
             ))}
           </div>
 
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-3">
             {loading ? (
-              <div className="h-10 w-24 bg-gray-200 animate-pulse rounded-lg" />
+              <div className="h-10 w-24 bg-gray-200 animate-pulse rounded-xl" />
             ) : user ? (
               <>
                 <Link
                   href="/dashboard"
-                  className="px-5 py-2.5 text-gray-700 hover:text-gray-900 transition-colors font-medium text-sm"
+                  className="px-5 py-2 text-gray-700 hover:text-gray-900 transition-colors font-medium text-sm"
                 >
                   Dashboard
                 </Link>
                 <Link
                   href="/dashboard"
-                  className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-200 font-medium text-sm"
+                  className="px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full hover:shadow-lg hover:scale-105 transition-all duration-200 font-medium text-sm"
                 >
                   My Links
                 </Link>
@@ -79,13 +79,13 @@ export default function Navbar() {
               <>
                 <Link
                   href="/login"
-                  className="px-6 py-2.5 text-gray-700 hover:text-gray-900 transition-colors font-semibold text-sm border border-gray-300 rounded-lg hover:border-gray-400 hover:bg-gray-50"
+                  className="px-5 py-2 text-gray-700 hover:text-gray-900 transition-colors font-medium text-sm hover:bg-gray-50 rounded-full"
                 >
                   Log in
                 </Link>
                 <Link
                   href="/login"
-                  className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 transition-all duration-200 font-semibold text-sm"
+                  className="px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 transition-all duration-200 font-semibold text-sm"
                 >
                   Get Started Free
                 </Link>
@@ -94,7 +94,7 @@ export default function Navbar() {
           </div>
 
           <button
-            className="md:hidden p-2 text-gray-700"
+            className="md:hidden p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
