@@ -16,7 +16,6 @@ import {
   Star,
   TrendingUp,
   Users,
-  Rocket,
 } from "lucide-react";
 import gsap from "gsap";
 
@@ -555,8 +554,9 @@ export default function HomePage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-32 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white relative overflow-hidden">
-          <div className="absolute inset-0 bg-grid-pattern opacity-5" />
+        <section className="py-32 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 text-white relative overflow-hidden">
+          <div className="absolute inset-0 bg-grid-pattern opacity-10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -564,20 +564,38 @@ export default function HomePage() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <Rocket className="h-16 w-16 mx-auto mb-8 text-blue-400" />
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
-                Ready to grow your audience?
+                Your links, your audience,
+                <br />
+                <span className="text-white/90">one simple link</span>
               </h2>
-              <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
-                Join millions of creators, influencers, and businesses using Linkly to grow their online presence.
+              <p className="text-xl text-white/80 mb-12 max-w-2xl mx-auto">
+                Join thousands using Linkly to share everything they create, curate, and sell from their social media.
               </p>
-              <Link
-                href="/login"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-2xl hover:shadow-blue-500/25 hover:scale-105 transition-all duration-300"
-              >
-                Get started for free
-                <ArrowRight className="h-5 w-5" />
-              </Link>
+              
+              <div className="max-w-md mx-auto">
+                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-2 border border-white/20 shadow-2xl">
+                  <div className="flex items-center gap-2 bg-white rounded-xl p-1">
+                    <div className="flex items-center gap-1 px-4 py-3 text-gray-500 font-medium text-lg">
+                      <span className="text-gray-400">linkly.to/</span>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="yourname"
+                      className="flex-1 px-2 py-3 text-gray-900 font-medium text-lg bg-transparent border-none outline-none placeholder:text-gray-400"
+                    />
+                    <Link
+                      href="/login"
+                      className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all whitespace-nowrap"
+                    >
+                      Claim yours
+                    </Link>
+                  </div>
+                </div>
+                <p className="text-sm text-white/60 mt-4">
+                  ✨ Free forever • No credit card required • Ready in 2 minutes
+                </p>
+              </div>
             </motion.div>
           </div>
         </section>
