@@ -5,8 +5,10 @@ import { useEffect, useState } from "react";
 
 export default function LoadingScreen() {
   const [isLoading, setIsLoading] = useState(true);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
     // Simulate loading time
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -14,6 +16,10 @@ export default function LoadingScreen() {
 
     return () => clearTimeout(timer);
   }, []);
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <AnimatePresence>

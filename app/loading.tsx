@@ -63,31 +63,35 @@ export default function Loading() {
 
       {/* Floating Particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            initial={{
-              x: Math.random() * window.innerWidth,
-              y: Math.random() * window.innerHeight,
-              scale: 0,
-            }}
-            animate={{
-              y: [null, Math.random() * window.innerHeight],
-              scale: [0, 1, 0],
-              opacity: [0, 0.5, 0],
-            }}
-            transition={{
-              duration: Math.random() * 3 + 2,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-            }}
-            className="absolute w-2 h-2 rounded-full bg-gradient-to-r from-blue-400 to-purple-400"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-          />
-        ))}
+        {[...Array(20)].map((_, i) => {
+          const randomX = Math.random() * 100;
+          const randomY = Math.random() * 100;
+          return (
+            <motion.div
+              key={i}
+              initial={{
+                x: `${randomX}vw`,
+                y: `${randomY}vh`,
+                scale: 0,
+              }}
+              animate={{
+                y: [`${randomY}vh`, `${Math.random() * 100}vh`],
+                scale: [0, 1, 0],
+                opacity: [0, 0.5, 0],
+              }}
+              transition={{
+                duration: Math.random() * 3 + 2,
+                repeat: Infinity,
+                delay: Math.random() * 2,
+              }}
+              className="absolute w-2 h-2 rounded-full bg-gradient-to-r from-blue-400 to-purple-400"
+              style={{
+                left: `${randomX}%`,
+                top: `${randomY}%`,
+              }}
+            />
+          );
+        })}
       </div>
     </div>
   );
