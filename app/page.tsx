@@ -334,90 +334,93 @@ export default function HomePage() {
         </section>
 
         {/* Who is Linkly For Section */}
-        <section className="py-32 bg-white relative overflow-hidden">
+        <section className="py-32 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 relative overflow-hidden">
+          {/* Animated background elements */}
+          <div className="absolute inset-0">
+            <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
+            <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+          </div>
+
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="text-center mb-20"
+              className="text-center mb-16"
             >
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
-                <span className="bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+                <span className="text-white">
                   Built for
                 </span>
                 <br />
-                <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
                   everyone
                 </span>
               </h2>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto mt-4">
-                Whether you&apos;re just starting out or already established, Linkly adapts to your needs.
+              <p className="text-xl text-gray-400 max-w-2xl mx-auto mt-4">
+                From creators to businesses, Linkly adapts to your unique needs.
               </p>
             </motion.div>
 
-            <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto mb-12">
               {[
                 {
                   title: "Content Creators",
-                  description: "YouTubers, podcasters, and bloggers use Linkly to share their latest content, merchandise, and sponsorships—all from one simple link.",
-                  gradient: "from-red-500 to-pink-500",
+                  description: "Share videos, podcasts, blogs, and merch in one place.",
+                  gradient: "from-red-500/20 via-pink-500/20 to-rose-500/20",
+                  gradientBorder: "from-red-500 via-pink-500 to-rose-500",
                   emoji: "🎥",
-                  stats: "Share videos, blogs & merch",
                 },
                 {
-                  title: "Social Media Influencers",
-                  description: "Instagram, TikTok, and Twitter influencers connect with followers by showcasing brand deals, affiliate links, and exclusive content.",
-                  gradient: "from-purple-500 to-pink-500",
+                  title: "Influencers",
+                  description: "Monetize your following with brand deals and exclusive content.",
+                  gradient: "from-purple-500/20 via-pink-500/20 to-fuchsia-500/20",
+                  gradientBorder: "from-purple-500 via-pink-500 to-fuchsia-500",
                   emoji: "📱",
-                  stats: "Monetize your following",
                 },
                 {
-                  title: "Small Businesses",
-                  description: "Local shops, online stores, and service providers drive traffic to their website, booking pages, and product catalogs with ease.",
-                  gradient: "from-blue-500 to-cyan-500",
+                  title: "Businesses",
+                  description: "Drive traffic to your products, services, and booking pages.",
+                  gradient: "from-blue-500/20 via-cyan-500/20 to-teal-500/20",
+                  gradientBorder: "from-blue-500 via-cyan-500 to-teal-500",
                   emoji: "🏪",
-                  stats: "Grow your business online",
                 },
                 {
-                  title: "Artists & Musicians",
-                  description: "Showcase your portfolio, music streaming links, concert tickets, and merchandise in one beautiful, customizable page.",
-                  gradient: "from-green-500 to-emerald-500",
+                  title: "Artists",
+                  description: "Showcase your portfolio, music, tickets, and creative work.",
+                  gradient: "from-green-500/20 via-emerald-500/20 to-teal-500/20",
+                  gradientBorder: "from-green-500 via-emerald-500 to-teal-500",
                   emoji: "🎨",
-                  stats: "Display your creative work",
                 },
                 {
-                  title: "Freelancers & Consultants",
-                  description: "Share your services, portfolio, testimonials, and booking links. Make it easy for clients to find and hire you.",
-                  gradient: "from-orange-500 to-yellow-500",
+                  title: "Freelancers",
+                  description: "Display services, testimonials, and make it easy to get hired.",
+                  gradient: "from-orange-500/20 via-amber-500/20 to-yellow-500/20",
+                  gradientBorder: "from-orange-500 via-amber-500 to-yellow-500",
                   emoji: "💼",
-                  stats: "Get hired faster",
                 },
                 {
-                  title: "Event Organizers",
-                  description: "Promote events, sell tickets, share schedules, and keep attendees informed with a single, easy-to-share link.",
-                  gradient: "from-indigo-500 to-purple-500",
+                  title: "Events",
+                  description: "Promote events, sell tickets, and keep attendees informed.",
+                  gradient: "from-indigo-500/20 via-purple-500/20 to-pink-500/20",
+                  gradientBorder: "from-indigo-500 via-purple-500 to-pink-500",
                   emoji: "🎉",
-                  stats: "Boost event attendance",
                 },
               ].map((item, idx) => (
                 <motion.div
                   key={idx}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: idx * 0.1 }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
                   className="group relative"
                 >
-                  <div className={`absolute -inset-1 bg-gradient-to-r ${item.gradient} rounded-3xl blur-lg opacity-25 group-hover:opacity-40 transition duration-300`} />
-                  <div className="relative bg-white rounded-3xl p-8 border border-gray-200 shadow-lg hover:shadow-2xl transition-all duration-300">
-                    <div className="text-5xl mb-4">{item.emoji}</div>
-                    <h3 className="text-2xl font-bold mb-3 text-gray-900">{item.title}</h3>
-                    <p className="text-gray-600 leading-relaxed mb-4">{item.description}</p>
-                    <div className={`inline-block px-4 py-2 rounded-full bg-gradient-to-r ${item.gradient} text-white text-sm font-semibold`}>
-                      {item.stats}
-                    </div>
+                  <div className={`absolute -inset-0.5 bg-gradient-to-r ${item.gradientBorder} rounded-2xl opacity-0 group-hover:opacity-100 blur transition duration-500`} />
+                  <div className={`relative h-full bg-gradient-to-br ${item.gradient} backdrop-blur-xl rounded-2xl p-8 border border-white/10 hover:border-white/20 transition-all duration-300`}>
+                    <div className="text-6xl mb-4">{item.emoji}</div>
+                    <h3 className="text-2xl font-bold mb-3 text-white">{item.title}</h3>
+                    <p className="text-gray-300 leading-relaxed">{item.description}</p>
                   </div>
                 </motion.div>
               ))}
@@ -428,18 +431,23 @@ export default function HomePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.6 }}
-              className="text-center mt-16"
+              className="text-center"
             >
-              <p className="text-2xl text-gray-700 font-semibold mb-6">
-                No matter what you do, Linkly helps you do it better.
-              </p>
-              <Link
-                href="/login"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-2xl hover:shadow-blue-500/25 hover:scale-105 transition-all duration-300"
-              >
-                Start for free
-                <ArrowRight className="h-5 w-5" />
-              </Link>
+              <div className="inline-block mb-8 px-6 py-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full">
+                <p className="text-lg text-gray-300">
+                  <span className="text-transparent bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text font-bold">No matter what you do</span>
+                  {" "}— Linkly helps you do it better
+                </p>
+              </div>
+              <div>
+                <Link
+                  href="/login"
+                  className="inline-flex items-center gap-2 px-10 py-5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white rounded-2xl font-bold text-lg hover:shadow-2xl hover:shadow-purple-500/50 hover:scale-105 transition-all duration-300"
+                >
+                  Start for free
+                  <ArrowRight className="h-6 w-6" />
+                </Link>
+              </div>
             </motion.div>
           </div>
         </section>
