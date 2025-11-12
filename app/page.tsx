@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
@@ -21,11 +21,35 @@ import {
 } from "lucide-react";
 import gsap from "gsap";
 
+interface Stats {
+  totalUsers: number;
+  totalLinks: number;
+  totalClicks: number;
+  usersToday: number;
+  linksToday: number;
+  clicksToday: number;
+  averageRating: number;
+}
+
+function formatNumber(num: number): string {
+  if (num >= 1000000000) {
+    return `${(num / 1000000000).toFixed(1)}B+`;
+  }
+  if (num >= 1000000) {
+    return `${(num / 1000000).toFixed(1)}M+`;
+  }
+  if (num >= 1000) {
+    return `${(num / 1000).toFixed(1)}K+`;
+  }
+  return num.toString();
+}
+
 export default function HomePage() {
   const heroRef = useRef<HTMLDivElement>(null);
   const featuresRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const [stats, setStats] = useState<Stats | null>(null);
 
   useEffect(() => {
     if (heroRef.current) {
@@ -41,6 +65,26 @@ export default function HomePage() {
         }
       );
     }
+  }, []);
+
+  useEffect(() => {
+    // Fetch real stats from API
+    const fetchStats = async () => {
+      try {
+        const response = await fetch("/api/stats");
+        if (response.ok) {
+          const data = await response.json();
+          setStats(data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch stats:", error);
+      }
+    };
+
+    fetchStats();
+    // Refresh stats every 60 seconds
+    const interval = setInterval(fetchStats, 60000);
+    return () => clearInterval(interval);
   }, []);
 
   const features = [
@@ -76,30 +120,9 @@ export default function HomePage() {
     },
     {
       icon: Shield,
-      title: "Secure & Reliable",
-      description: "Enterprise-grade security and 99.9% uptime guarantee. Your links are always available.",
-      color: "from-red-500 to-rose-500",
-    },
-  ];
-
-  const testimonials = [
-    {
-      quote: "Linkly has completely transformed how I share my content. The analytics are incredible and help me understand my audience better.",
-      author: "Sarah Chen",
-      role: "Content Creator",
-      rating: 5,
-    },
-    {
-      quote: "The customization options are endless. I love how I can make my page truly reflect my brand and personality.",
-      author: "Marcus Johnson",
-      role: "Digital Marketer",
-      rating: 5,
-    },
-    {
-      quote: "Best link-in-bio tool I've used. It's fast, beautiful, and the support team is amazing. Highly recommend!",
-      author: "Emily Rodriguez",
-      role: "Influencer",
-      rating: 5,
+      title: "100% Free Forever",
+      description: "No credit card required. All features are completely free with no hidden costs or limitations.",
+      color: "from-green-500 to-emerald-500",
     },
   ];
 
@@ -146,10 +169,10 @@ export default function HomePage() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 mb-8 hero-element"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-50 border border-green-200 mb-8 hero-element"
               >
-                <Sparkles className="h-4 w-4 text-blue-600" />
-                <span className="text-sm font-medium text-blue-700">Join 2M+ creators using Linkly</span>
+                <Sparkles className="h-4 w-4 text-green-600" />
+                <span className="text-sm font-medium text-green-700">100% Free Forever - No Credit Card Required</span>
               </motion.div>
 
               <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 hero-element">
@@ -263,10 +286,29 @@ export default function HomePage() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto text-center">
               {[
-                { icon: Users, value: "2M+", label: "Active Users" },
-                { icon: Link2, value: "50M+", label: "Links Created" },
-                { icon: TrendingUp, value: "1B+", label: "Clicks Tracked" },
-                { icon: Star, value: "4.9/5", label: "User Rating" },
+                { 
+                  icon: Users, 
+                  value: stats ? formatNumber(stats.totalUsers) : "...", 
+                  label: "Active Users",
+                  subLabel: stats ? `${stats.usersToday} today` : undefined
+                },
+                { 
+                  icon: Link2, 
+                  value: stats ? formatNumber(stats.totalLinks) : "...", 
+                  label: "Links Created",
+                  subLabel: stats ? `${stats.linksToday} today` : undefined
+                },
+                { 
+                  icon: TrendingUp, 
+                  value: stats ? formatNumber(stats.totalClicks) : "...", 
+                  label: "Clicks Tracked",
+                  subLabel: stats ? `${stats.clicksToday} today` : undefined
+                },
+                { 
+                  icon: Star, 
+                  value: stats ? `${stats.averageRating}/5` : "...", 
+                  label: "User Rating" 
+                },
               ].map((stat, idx) => {
                 const Icon = stat.icon;
                 return (
@@ -281,6 +323,9 @@ export default function HomePage() {
                     <Icon className="h-8 w-8 mb-3 opacity-90" />
                     <div className="text-4xl font-bold mb-2">{stat.value}</div>
                     <div className="text-blue-100 text-sm font-medium">{stat.label}</div>
+                    {stat.subLabel && (
+                      <div className="text-blue-200 text-xs mt-1 opacity-75">{stat.subLabel}</div>
+                    )}
                   </motion.div>
                 );
               })}
@@ -288,7 +333,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Testimonials Section */}
+        {/* Why Choose Linkly Section */}
         <section className="py-32 bg-gray-50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
@@ -300,39 +345,75 @@ export default function HomePage() {
             >
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
                 <span className="bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-                  Loved by creators
+                  Why choose
                 </span>
                 <br />
                 <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  worldwide
+                  Linkly?
                 </span>
               </h2>
+              <p className="text-xl text-gray-600 max-w-2xl mx-auto mt-4">
+                Everything you need to create, share, and grow your online presence—all in one place.
+              </p>
             </motion.div>
 
-            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              {testimonials.map((testimonial, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: idx * 0.1 }}
-                  className="p-8 bg-white rounded-2xl border border-gray-200 shadow-lg hover:shadow-xl transition-shadow"
-                >
-                  <div className="flex gap-1 mb-4">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-                    ))}
-                  </div>
-                  <p className="text-gray-700 mb-6 leading-relaxed italic">
-                    &ldquo;{testimonial.quote}&rdquo;
-                  </p>
-                  <div>
-                    <p className="font-bold text-gray-900">{testimonial.author}</p>
-                    <p className="text-sm text-gray-600">{testimonial.role}</p>
-                  </div>
-                </motion.div>
-              ))}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {[
+                {
+                  icon: Zap,
+                  title: "Lightning Fast Setup",
+                  description: "Get your link in bio page up and running in minutes. No technical skills required—just sign up and start adding links.",
+                  color: "from-yellow-500 to-orange-500",
+                },
+                {
+                  icon: Palette,
+                  title: "Fully Customizable",
+                  description: "Make it yours. Customize colors, fonts, layouts, and more to match your unique brand and style.",
+                  color: "from-purple-500 to-pink-500",
+                },
+                {
+                  icon: BarChart3,
+                  title: "Powerful Analytics",
+                  description: "Track every click, see where your traffic comes from, and understand your audience with detailed insights.",
+                  color: "from-green-500 to-emerald-500",
+                },
+                {
+                  icon: Shield,
+                  title: "100% Free Forever",
+                  description: "No credit card required. No hidden fees. All features are completely free with no limitations or restrictions.",
+                  color: "from-blue-500 to-cyan-500",
+                },
+                {
+                  icon: Globe,
+                  title: "Works Everywhere",
+                  description: "Share on Instagram, TikTok, Twitter, YouTube, and any platform. One link that works across all social media.",
+                  color: "from-indigo-500 to-blue-500",
+                },
+                {
+                  icon: Rocket,
+                  title: "Built for Growth",
+                  description: "Scale your online presence effortlessly. Add unlimited links, organize with sections, and optimize for conversions.",
+                  color: "from-pink-500 to-red-500",
+                },
+              ].map((item, idx) => {
+                const Icon = item.icon;
+                return (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: idx * 0.1 }}
+                    className="p-8 bg-white rounded-2xl border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 group"
+                  >
+                    <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${item.color} p-3 mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                      <Icon className="h-8 w-8 text-white" />
+                    </div>
+                    <h3 className="text-2xl font-bold mb-3 text-gray-900">{item.title}</h3>
+                    <p className="text-gray-600 leading-relaxed">{item.description}</p>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
         </section>
@@ -388,66 +469,41 @@ export default function HomePage() {
             >
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
                 <span className="bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-                  Simple, transparent
+                  Completely free.
                 </span>
                 <br />
                 <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  pricing
+                  Forever.
                 </span>
               </h2>
-              <p className="text-xl text-gray-600">Start free, upgrade when you&apos;re ready</p>
+              <p className="text-xl text-gray-600">No credit card required. No hidden fees. No limitations.</p>
             </motion.div>
 
-            <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <div className="max-w-4xl mx-auto">
               <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="p-10 bg-white rounded-2xl border-2 border-gray-200 shadow-lg"
-              >
-                <h3 className="text-3xl font-bold mb-2">Free</h3>
-                <div className="text-5xl font-bold mb-6">
-                  $0<span className="text-xl text-gray-600 font-normal">/month</span>
-                </div>
-                <ul className="space-y-4 mb-10">
-                  {["Unlimited links", "Basic templates", "Basic analytics", "Mobile responsive"].map((item) => (
-                    <li key={item} className="flex items-center gap-3">
-                      <Check className="h-5 w-5 text-green-600 flex-shrink-0" />
-                      <span className="text-gray-700">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  href="/login"
-                  className="block w-full text-center px-6 py-4 bg-gray-900 text-white rounded-xl font-semibold hover:bg-gray-800 transition-colors"
-                >
-                  Get started
-                </Link>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
                 className="relative p-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl text-white shadow-2xl border-2 border-blue-500"
               >
-                <div className="absolute top-6 right-6 bg-yellow-400 text-gray-900 px-4 py-1.5 rounded-full text-sm font-bold">
-                  Popular
+                <div className="absolute top-6 right-6 bg-green-400 text-gray-900 px-4 py-1.5 rounded-full text-sm font-bold">
+                  100% Free
                 </div>
-                <h3 className="text-3xl font-bold mb-2">Pro</h3>
+                <h3 className="text-3xl font-bold mb-2">Everything You Need</h3>
                 <div className="text-5xl font-bold mb-6">
-                  $9<span className="text-xl opacity-90 font-normal">/month</span>
+                  $0<span className="text-xl opacity-90 font-normal">/forever</span>
                 </div>
                 <ul className="space-y-4 mb-10">
                   {[
-                    "Everything in Free",
-                    "Premium templates",
+                    "Unlimited links",
+                    "All templates included",
                     "Advanced analytics",
-                    "Custom domain",
+                    "Full customization",
+                    "Mobile responsive",
+                    "Custom domain support",
                     "Priority support",
-                    "Remove branding",
+                    "No branding required",
                   ].map((item) => (
                     <li key={item} className="flex items-center gap-3">
                       <Check className="h-5 w-5 flex-shrink-0" />
@@ -459,7 +515,7 @@ export default function HomePage() {
                   href="/login"
                   className="block w-full text-center px-6 py-4 bg-white text-blue-600 rounded-xl font-semibold hover:bg-gray-100 transition-colors"
                 >
-                  Upgrade to Pro
+                  Get Started Free
                 </Link>
               </motion.div>
             </div>

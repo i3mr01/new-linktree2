@@ -78,22 +78,22 @@ export default function Navbar() {
                   href="/dashboard"
                   className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-200 font-medium text-sm"
                 >
-                  Get Started
+                  My Links
                 </Link>
               </>
             ) : (
               <>
                 <Link
                   href="/login"
-                  className="px-5 py-2.5 text-gray-700 hover:text-gray-900 transition-colors font-medium text-sm"
+                  className="px-6 py-2.5 text-gray-700 hover:text-gray-900 transition-colors font-semibold text-sm border border-gray-300 rounded-lg hover:border-gray-400 hover:bg-gray-50"
                 >
                   Log in
                 </Link>
                 <Link
                   href="/login"
-                  className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-200 font-medium text-sm"
+                  className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 transition-all duration-200 font-semibold text-sm"
                 >
-                  Sign up free
+                  Get Started Free
                 </Link>
               </>
             )}
