@@ -334,14 +334,15 @@ export default function HomePage() {
         </section>
 
         {/* Why Choose Linkly Section */}
-        <section className="py-32 bg-gray-50">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-32 bg-gradient-to-b from-white via-blue-50/30 to-purple-50/30 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-100/20 via-transparent to-purple-100/20" />
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="text-center mb-20"
+              className="text-center mb-16"
             >
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
                 <span className="bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
@@ -357,60 +358,76 @@ export default function HomePage() {
               </p>
             </motion.div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="max-w-7xl mx-auto space-y-6">
               {[
                 {
                   icon: Zap,
                   title: "Lightning Fast Setup",
                   description: "Get your link in bio page up and running in minutes. No technical skills required—just sign up and start adding links.",
-                  color: "from-yellow-500 to-orange-500",
+                  gradient: "from-yellow-500 via-orange-500 to-red-500",
+                  position: "left",
                 },
                 {
                   icon: Palette,
                   title: "Fully Customizable",
                   description: "Make it yours. Customize colors, fonts, layouts, and more to match your unique brand and style.",
-                  color: "from-purple-500 to-pink-500",
+                  gradient: "from-purple-500 via-pink-500 to-rose-500",
+                  position: "right",
                 },
                 {
                   icon: BarChart3,
                   title: "Powerful Analytics",
                   description: "Track every click, see where your traffic comes from, and understand your audience with detailed insights.",
-                  color: "from-green-500 to-emerald-500",
+                  gradient: "from-green-500 via-emerald-500 to-teal-500",
+                  position: "left",
                 },
                 {
                   icon: Shield,
                   title: "100% Free Forever",
                   description: "No credit card required. No hidden fees. All features are completely free with no limitations or restrictions.",
-                  color: "from-blue-500 to-cyan-500",
+                  gradient: "from-blue-500 via-cyan-500 to-sky-500",
+                  position: "right",
                 },
                 {
                   icon: Globe,
                   title: "Works Everywhere",
                   description: "Share on Instagram, TikTok, Twitter, YouTube, and any platform. One link that works across all social media.",
-                  color: "from-indigo-500 to-blue-500",
+                  gradient: "from-indigo-500 via-blue-500 to-purple-500",
+                  position: "left",
                 },
                 {
                   icon: Rocket,
                   title: "Built for Growth",
                   description: "Scale your online presence effortlessly. Add unlimited links, organize with sections, and optimize for conversions.",
-                  color: "from-pink-500 to-red-500",
+                  gradient: "from-pink-500 via-fuchsia-500 to-purple-500",
+                  position: "right",
                 },
               ].map((item, idx) => {
                 const Icon = item.icon;
+                const isLeft = item.position === "left";
                 return (
                   <motion.div
                     key={idx}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, x: isLeft ? -50 : 50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: idx * 0.1 }}
-                    className="p-8 bg-white rounded-2xl border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-300 group"
+                    transition={{ duration: 0.7, delay: idx * 0.1 }}
+                    className={`flex flex-col md:flex-row items-center gap-8 ${!isLeft ? "md:flex-row-reverse" : ""}`}
                   >
-                    <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${item.color} p-3 mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                      <Icon className="h-8 w-8 text-white" />
+                    <div className="w-full md:w-1/2">
+                      <div className={`group relative overflow-hidden rounded-3xl bg-gradient-to-br ${item.gradient} p-[2px] hover:scale-105 transition-transform duration-300`}>
+                        <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 h-full">
+                          <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${item.gradient} p-4 mb-6 shadow-lg group-hover:shadow-xl transition-shadow`}>
+                            <Icon className="h-8 w-8 text-white" />
+                          </div>
+                          <h3 className="text-3xl font-bold mb-4 text-gray-900">{item.title}</h3>
+                          <p className="text-gray-600 leading-relaxed text-lg">{item.description}</p>
+                        </div>
+                      </div>
                     </div>
-                    <h3 className="text-2xl font-bold mb-3 text-gray-900">{item.title}</h3>
-                    <p className="text-gray-600 leading-relaxed">{item.description}</p>
+                    <div className="w-full md:w-1/2 flex justify-center">
+                      <div className={`w-48 h-48 rounded-full bg-gradient-to-br ${item.gradient} opacity-10 blur-3xl`} />
+                    </div>
                   </motion.div>
                 );
               })}
