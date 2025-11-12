@@ -510,11 +510,11 @@ export default function HomePage() {
               <div className="max-w-2xl mx-auto">
                 <div className="flex flex-col sm:flex-row items-center gap-3 p-3 bg-white rounded-2xl shadow-2xl border border-gray-200">
                   <div className="flex items-center flex-1 w-full px-4 py-4 bg-gray-50 rounded-xl">
-                    <span className="text-gray-400 font-medium mr-2">linkly.to/</span>
+                    <span className="text-gray-400 font-medium">linkly.to/</span>
                     <input
                       type="text"
                       placeholder="yourname"
-                      className="flex-1 bg-transparent border-none outline-none text-gray-400 font-medium text-lg placeholder:text-gray-400"
+                      className="flex-1 bg-transparent border-none outline-none text-gray-400 text-lg placeholder:text-gray-400"
                     />
                   </div>
                   <Link
