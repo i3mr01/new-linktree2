@@ -333,105 +333,114 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Why Choose Linkly Section */}
-        <section className="py-32 bg-gradient-to-b from-white via-blue-50/30 to-purple-50/30 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-100/20 via-transparent to-purple-100/20" />
+        {/* Who is Linkly For Section */}
+        <section className="py-32 bg-white relative overflow-hidden">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="text-center mb-16"
+              className="text-center mb-20"
             >
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
                 <span className="bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-                  Why choose
+                  Built for
                 </span>
                 <br />
                 <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  Linkly?
+                  everyone
                 </span>
               </h2>
               <p className="text-xl text-gray-600 max-w-2xl mx-auto mt-4">
-                Everything you need to create, share, and grow your online presence—all in one place.
+                Whether you&apos;re just starting out or already established, Linkly adapts to your needs.
               </p>
             </motion.div>
 
-            <div className="max-w-7xl mx-auto space-y-6">
+            <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
               {[
                 {
-                  icon: Zap,
-                  title: "Lightning Fast Setup",
-                  description: "Get your link in bio page up and running in minutes. No technical skills required—just sign up and start adding links.",
-                  gradient: "from-yellow-500 via-orange-500 to-red-500",
-                  position: "left",
+                  title: "Content Creators",
+                  description: "YouTubers, podcasters, and bloggers use Linkly to share their latest content, merchandise, and sponsorships—all from one simple link.",
+                  gradient: "from-red-500 to-pink-500",
+                  emoji: "🎥",
+                  stats: "Share videos, blogs & merch",
                 },
                 {
-                  icon: Palette,
-                  title: "Fully Customizable",
-                  description: "Make it yours. Customize colors, fonts, layouts, and more to match your unique brand and style.",
-                  gradient: "from-purple-500 via-pink-500 to-rose-500",
-                  position: "right",
+                  title: "Social Media Influencers",
+                  description: "Instagram, TikTok, and Twitter influencers connect with followers by showcasing brand deals, affiliate links, and exclusive content.",
+                  gradient: "from-purple-500 to-pink-500",
+                  emoji: "📱",
+                  stats: "Monetize your following",
                 },
                 {
-                  icon: BarChart3,
-                  title: "Powerful Analytics",
-                  description: "Track every click, see where your traffic comes from, and understand your audience with detailed insights.",
-                  gradient: "from-green-500 via-emerald-500 to-teal-500",
-                  position: "left",
+                  title: "Small Businesses",
+                  description: "Local shops, online stores, and service providers drive traffic to their website, booking pages, and product catalogs with ease.",
+                  gradient: "from-blue-500 to-cyan-500",
+                  emoji: "🏪",
+                  stats: "Grow your business online",
                 },
                 {
-                  icon: Shield,
-                  title: "100% Free Forever",
-                  description: "No credit card required. No hidden fees. All features are completely free with no limitations or restrictions.",
-                  gradient: "from-blue-500 via-cyan-500 to-sky-500",
-                  position: "right",
+                  title: "Artists & Musicians",
+                  description: "Showcase your portfolio, music streaming links, concert tickets, and merchandise in one beautiful, customizable page.",
+                  gradient: "from-green-500 to-emerald-500",
+                  emoji: "🎨",
+                  stats: "Display your creative work",
                 },
                 {
-                  icon: Globe,
-                  title: "Works Everywhere",
-                  description: "Share on Instagram, TikTok, Twitter, YouTube, and any platform. One link that works across all social media.",
-                  gradient: "from-indigo-500 via-blue-500 to-purple-500",
-                  position: "left",
+                  title: "Freelancers & Consultants",
+                  description: "Share your services, portfolio, testimonials, and booking links. Make it easy for clients to find and hire you.",
+                  gradient: "from-orange-500 to-yellow-500",
+                  emoji: "💼",
+                  stats: "Get hired faster",
                 },
                 {
-                  icon: Rocket,
-                  title: "Built for Growth",
-                  description: "Scale your online presence effortlessly. Add unlimited links, organize with sections, and optimize for conversions.",
-                  gradient: "from-pink-500 via-fuchsia-500 to-purple-500",
-                  position: "right",
+                  title: "Event Organizers",
+                  description: "Promote events, sell tickets, share schedules, and keep attendees informed with a single, easy-to-share link.",
+                  gradient: "from-indigo-500 to-purple-500",
+                  emoji: "🎉",
+                  stats: "Boost event attendance",
                 },
-              ].map((item, idx) => {
-                const Icon = item.icon;
-                const isLeft = item.position === "left";
-                return (
-                  <motion.div
-                    key={idx}
-                    initial={{ opacity: 0, x: isLeft ? -50 : 50 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.7, delay: idx * 0.1 }}
-                    className={`flex flex-col md:flex-row items-center gap-8 ${!isLeft ? "md:flex-row-reverse" : ""}`}
-                  >
-                    <div className="w-full md:w-1/2">
-                      <div className={`group relative overflow-hidden rounded-3xl bg-gradient-to-br ${item.gradient} p-[2px] hover:scale-105 transition-transform duration-300`}>
-                        <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 h-full">
-                          <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${item.gradient} p-4 mb-6 shadow-lg group-hover:shadow-xl transition-shadow`}>
-                            <Icon className="h-8 w-8 text-white" />
-                          </div>
-                          <h3 className="text-3xl font-bold mb-4 text-gray-900">{item.title}</h3>
-                          <p className="text-gray-600 leading-relaxed text-lg">{item.description}</p>
-                        </div>
-                      </div>
+              ].map((item, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: idx * 0.1 }}
+                  className="group relative"
+                >
+                  <div className={`absolute -inset-1 bg-gradient-to-r ${item.gradient} rounded-3xl blur-lg opacity-25 group-hover:opacity-40 transition duration-300`} />
+                  <div className="relative bg-white rounded-3xl p-8 border border-gray-200 shadow-lg hover:shadow-2xl transition-all duration-300">
+                    <div className="text-5xl mb-4">{item.emoji}</div>
+                    <h3 className="text-2xl font-bold mb-3 text-gray-900">{item.title}</h3>
+                    <p className="text-gray-600 leading-relaxed mb-4">{item.description}</p>
+                    <div className={`inline-block px-4 py-2 rounded-full bg-gradient-to-r ${item.gradient} text-white text-sm font-semibold`}>
+                      {item.stats}
                     </div>
-                    <div className="w-full md:w-1/2 flex justify-center">
-                      <div className={`w-48 h-48 rounded-full bg-gradient-to-br ${item.gradient} opacity-10 blur-3xl`} />
-                    </div>
-                  </motion.div>
-                );
-              })}
+                  </div>
+                </motion.div>
+              ))}
             </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="text-center mt-16"
+            >
+              <p className="text-2xl text-gray-700 font-semibold mb-6">
+                No matter what you do, Linkly helps you do it better.
+              </p>
+              <Link
+                href="/login"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-2xl hover:shadow-blue-500/25 hover:scale-105 transition-all duration-300"
+              >
+                Start for free
+                <ArrowRight className="h-5 w-5" />
+              </Link>
+            </motion.div>
           </div>
         </section>
 
