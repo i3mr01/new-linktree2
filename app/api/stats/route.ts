@@ -1,9 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 export const revalidate = 60; // Revalidate every 60 seconds
 
-export async function GET(_req: NextRequest) {
+export async function GET() {
   try {
     // Get today's date at midnight
     const today = new Date();
