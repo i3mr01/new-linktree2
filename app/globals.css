@@ -127,3 +127,19 @@ body {
   }
 }
 
+/* Prevent flash of unstyled content */
+html:not(.hydrated) body {
+  visibility: hidden;
+}
+
+html.hydrated body {
+  visibility: visible;
+}
+
+/* Smooth page transitions */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
