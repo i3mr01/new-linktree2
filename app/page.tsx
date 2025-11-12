@@ -498,8 +498,10 @@ export default function HomePage() {
               transition={{ duration: 0.6 }}
               className="max-w-4xl mx-auto"
             >
-              <h2 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-                Create your Linkly
+              <h2 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 pb-2">
+                <span className="bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+                  Create your Linkly
+                </span>
               </h2>
               <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
                 Join thousands sharing everything they create from one simple link
@@ -512,7 +514,7 @@ export default function HomePage() {
                     <input
                       type="text"
                       placeholder="yourname"
-                      className="flex-1 bg-transparent border-none outline-none text-gray-900 font-medium text-lg placeholder:text-gray-400"
+                      className="flex-1 bg-transparent border-none outline-none text-gray-400 font-medium text-lg placeholder:text-gray-400"
                     />
                   </div>
                   <Link
