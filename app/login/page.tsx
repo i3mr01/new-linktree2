@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { auth } from "@/lib/firebase/client";
@@ -25,7 +25,7 @@ function isFirebaseError(error: unknown): error is { code: string; message: stri
   );
 }
 
-export default function LoginPage() {
+function LoginPageContent() {
   const searchParams = useSearchParams();
   const [isSignUp, setIsSignUp] = useState(searchParams?.get('mode') === 'signup');
   const [name, setName] = useState("");
@@ -405,5 +405,22 @@ export default function LoginPage() {
         </div>
       </motion.div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="text-center">
+          <div className="inline-block mb-4">
+            <div className="h-8 w-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+          </div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    }>
+      <LoginPageContent />
+    </Suspense>
   );
 }
