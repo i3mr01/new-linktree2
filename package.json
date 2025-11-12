@@ -13,7 +13,9 @@
     "postinstall": "prisma generate",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
-    "prisma:studio": "prisma studio"
+    "prisma:studio": "prisma studio",
+    "push": "node scripts/auto-push.js",
+    "push:ps1": "powershell -ExecutionPolicy Bypass -File scripts/auto-push.ps1"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.1.0",
