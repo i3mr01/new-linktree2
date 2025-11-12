@@ -12,7 +12,7 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Mail, Lock, User, Sparkles } from "lucide-react";
+import { ArrowRight, Mail, Lock, User } from "lucide-react";
 
 // Type guard to check if error is a Firebase error
 function isFirebaseError(error: unknown): error is { code: string; message: string } {
@@ -108,7 +108,7 @@ function LoginPageContent() {
   };
 
   return (
-    <div className="min-h-screen flex relative overflow-hidden bg-white">
+    <div className="min-h-screen flex relative bg-white">
       {/* Animated Background Gradient */}
       <motion.div
         initial={false}
@@ -116,7 +116,7 @@ function LoginPageContent() {
           left: isSignUp ? '0%' : '50%',
         }}
         transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-        className="absolute top-0 bottom-0 w-1/2 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 hidden lg:block"
+        className="fixed top-0 bottom-0 w-1/2 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 hidden lg:block z-0"
       >
         <div className="absolute inset-0 bg-grid-pattern opacity-10" />
         
@@ -130,15 +130,6 @@ function LoginPageContent() {
             className="relative z-10 h-full flex flex-col items-center justify-center p-12 text-white"
           >
             <div className="text-center max-w-md">
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-                className="inline-block mb-6"
-              >
-                <Sparkles className="h-16 w-16" />
-              </motion.div>
-              
               <h2 className="text-5xl font-bold mb-6">
                 {isSignUp ? 'Join Linkly today' : 'Welcome back'}
               </h2>
@@ -181,7 +172,7 @@ function LoginPageContent() {
           marginLeft: isSignUp ? '50%' : '0%',
         }}
         transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-        className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 relative z-20"
+        className="w-full lg:w-1/2 flex items-center justify-center px-4 sm:px-6 lg:px-8 relative z-10 bg-white min-h-screen"
       >
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
