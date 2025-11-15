@@ -48,6 +48,7 @@ export default function HomePage() {
   const { scrollYProgress } = useScroll();
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   const [stats, setStats] = useState<Stats | null>(null);
+  const [hoveredFeature, setHoveredFeature] = useState<number | null>(null);
 
   useEffect(() => {
     if (heroRef.current) {
@@ -145,7 +146,7 @@ export default function HomePage() {
                 <span className="text-sm font-medium text-green-700">✨ 100% Free Forever - No Credit Card Required</span>
               </motion.div>
 
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 hero-element">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight hero-element">
                 <span className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent">
                   The link in bio
                 </span>
@@ -155,16 +156,16 @@ export default function HomePage() {
                 </span>
               </h1>
 
-              <p className="text-xl sm:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed hero-element">
+              <p className="text-lg sm:text-xl md:text-2xl text-gray-600 mb-8 sm:mb-12 max-w-3xl mx-auto leading-relaxed hero-element px-4">
                 One link to share everything you create, curate, and sell. Beautiful pages, powerful analytics, unlimited customization.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center hero-element">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-stretch sm:items-center hero-element px-4 w-full sm:w-auto max-w-md sm:max-w-none mx-auto">
                 <Link
                   href="/login"
-                  className="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold text-lg hover:shadow-2xl hover:shadow-blue-500/25 hover:scale-105 transition-all duration-300 overflow-hidden"
+                  className="group relative px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold text-base sm:text-lg hover:shadow-2xl hover:shadow-blue-500/25 hover:scale-105 transition-all duration-300 overflow-hidden text-center"
                 >
-                  <span className="relative z-10 flex items-center gap-2">
+                  <span className="relative z-10 flex items-center justify-center gap-2">
                     Get started free
                     <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
                   </span>
@@ -172,7 +173,7 @@ export default function HomePage() {
                 </Link>
                 <Link
                   href="#features"
-                  className="px-8 py-4 bg-white text-gray-900 rounded-xl font-semibold text-lg border-2 border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300"
+                  className="px-6 sm:px-8 py-3 sm:py-4 bg-white text-gray-900 rounded-xl font-semibold text-base sm:text-lg border-2 border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 text-center"
                 >
                   See how it works
                 </Link>
@@ -184,13 +185,104 @@ export default function HomePage() {
                 transition={{ delay: 0.8, duration: 0.6 }}
                 className="mt-16 hero-element"
               >
-                <div className="relative max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-2xl border border-gray-200">
-                  <div className="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center">
-                    <div className="text-center">
-                      <div className="text-6xl mb-4">🔗</div>
-                      <p className="text-gray-600 font-medium">Your beautiful Linkly page preview</p>
+                {/* Browser Mockup */}
+                <div className="relative max-w-4xl mx-auto">
+                  {/* Browser Chrome */}
+                  <div className="bg-gray-100 rounded-t-2xl p-3 border border-b-0 border-gray-200">
+                    <div className="flex items-center gap-2">
+                      <div className="flex gap-1.5">
+                        <div className="w-3 h-3 rounded-full bg-red-500" />
+                        <div className="w-3 h-3 rounded-full bg-yellow-500" />
+                        <div className="w-3 h-3 rounded-full bg-green-500" />
+                      </div>
+                      <div className="flex-1 ml-4">
+                        <div className="bg-white rounded-lg px-4 py-1.5 text-sm text-gray-600 flex items-center gap-2">
+                          <Globe className="h-3.5 w-3.5 text-gray-400" />
+                          <span className="font-medium">linkly.to/yourname</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
+                  
+                  {/* Browser Content */}
+                  <div className="relative rounded-b-2xl overflow-hidden shadow-2xl border border-t-0 border-gray-200">
+                    <div className="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-6 sm:p-8 md:p-12">
+                      {/* Profile Section */}
+                      <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ delay: 1.2, type: "spring" }}
+                        className="flex flex-col items-center mb-8"
+                      >
+                        <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 mb-3 sm:mb-4 flex items-center justify-center text-white text-2xl sm:text-3xl font-bold shadow-lg">
+                          YN
+                        </div>
+                        <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-1">Your Name</h3>
+                        <p className="text-sm sm:text-base text-gray-600">Content Creator & Designer</p>
+                      </motion.div>
+
+                      {/* Links */}
+                      <div className="space-y-3 max-w-lg mx-auto">
+                        {[
+                          { title: "My Portfolio", gradient: "from-blue-500 to-cyan-500", delay: 1.4 },
+                          { title: "Latest YouTube Video", gradient: "from-red-500 to-pink-500", delay: 1.5 },
+                          { title: "Shop My Merch", gradient: "from-purple-500 to-pink-500", delay: 1.6 },
+                          { title: "Book a Call", gradient: "from-green-500 to-emerald-500", delay: 1.7 },
+                        ].map((link, idx) => (
+                          <motion.div
+                            key={idx}
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: link.delay }}
+                            className="group relative"
+                          >
+                            <div className={`absolute inset-0 bg-gradient-to-r ${link.gradient} opacity-0 group-hover:opacity-100 rounded-xl transition-opacity blur`} />
+                            <div className="relative bg-white hover:bg-gray-50 rounded-xl p-3 sm:p-4 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-200">
+                              <div className="flex items-center justify-between">
+                                <span className="font-semibold text-sm sm:text-base text-gray-900">{link.title}</span>
+                                <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400 group-hover:translate-x-1 transition-transform" />
+                              </div>
+                            </div>
+                          </motion.div>
+                        ))}
+                      </div>
+
+                      {/* Social Icons */}
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 1.8 }}
+                        className="flex justify-center gap-4 mt-8"
+                      >
+                        {["Instagram", "Twitter", "YouTube", "TikTok"].map((social) => (
+                          <div
+                            key={social}
+                            className="w-10 h-10 rounded-full bg-white shadow-md hover:shadow-lg transition-shadow cursor-pointer flex items-center justify-center text-gray-600 hover:text-gray-900"
+                          >
+                            <div className="w-5 h-5 bg-gradient-to-br from-gray-400 to-gray-600 rounded-full" />
+                          </div>
+                        ))}
+                      </motion.div>
+                    </div>
+                  </div>
+
+                  {/* Floating Analytics Badge */}
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    transition={{ delay: 2, type: "spring" }}
+                    className="hidden sm:block absolute -bottom-6 -right-6 bg-white rounded-2xl shadow-2xl p-4 border border-gray-200"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center">
+                        <TrendingUp className="h-6 w-6 text-white" />
+                      </div>
+                      <div>
+                        <div className="text-2xl font-bold text-gray-900">1.2K</div>
+                        <div className="text-xs text-gray-600">Clicks today</div>
+                      </div>
+                    </div>
+                  </motion.div>
                 </div>
               </motion.div>
             </div>
@@ -212,7 +304,7 @@ export default function HomePage() {
               transition={{ duration: 0.6 }}
               className="text-center mb-20"
             >
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight px-4">
                 <span className="bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
                   Everything you need to
                 </span>
@@ -221,12 +313,12 @@ export default function HomePage() {
                   grow your audience
                 </span>
               </h2>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto px-4">
                 Powerful features designed to help you create, customize, and optimize your link in bio page.
               </p>
             </motion.div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 max-w-7xl mx-auto px-4">
               {features.map((feature, idx) => {
                 const Icon = feature.icon;
                 return (
@@ -236,14 +328,35 @@ export default function HomePage() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: idx * 0.1 }}
-                    className="group relative p-8 rounded-2xl border border-gray-200 hover:border-transparent hover:shadow-2xl transition-all duration-300 bg-white"
+                    onMouseEnter={() => setHoveredFeature(idx)}
+                    onMouseLeave={() => setHoveredFeature(null)}
+                    className="group relative p-6 sm:p-8 rounded-2xl border border-gray-200 hover:border-transparent hover:shadow-2xl transition-all duration-300 bg-white cursor-pointer"
                   >
-                    <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-5 rounded-2xl transition-opacity`} />
-                    <div className={`relative w-14 h-14 rounded-xl bg-gradient-to-br ${feature.color} p-3 mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                      <Icon className="h-8 w-8 text-white" />
-                    </div>
-                    <h3 className="text-2xl font-bold mb-3 text-gray-900">{feature.title}</h3>
-                    <p className="text-gray-600 leading-relaxed">{feature.description}</p>
+                    <motion.div 
+                      className={`absolute inset-0 bg-gradient-to-br ${feature.color} rounded-2xl transition-opacity`}
+                      animate={{ opacity: hoveredFeature === idx ? 0.08 : 0 }}
+                      transition={{ duration: 0.3 }}
+                    />
+                    <motion.div 
+                      className={`relative w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br ${feature.color} p-2.5 sm:p-3 mb-4 sm:mb-6 transition-transform duration-300`}
+                      animate={{ 
+                        scale: hoveredFeature === idx ? 1.1 : 1,
+                        rotate: hoveredFeature === idx ? 5 : 0
+                      }}
+                    >
+                      <Icon className="h-full w-full text-white" />
+                    </motion.div>
+                    <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-3 text-gray-900 relative">{feature.title}</h3>
+                    <p className="text-sm sm:text-base text-gray-600 leading-relaxed relative">{feature.description}</p>
+                    
+                    {/* Interactive indicator */}
+                    <motion.div
+                      className="absolute bottom-4 right-4 flex items-center gap-1 text-xs text-gray-400"
+                      animate={{ opacity: hoveredFeature === idx ? 1 : 0 }}
+                    >
+                      <span>Learn more</span>
+                      <ArrowRight className="h-3 w-3" />
+                    </motion.div>
                   </motion.div>
                 );
               })}
@@ -252,53 +365,59 @@ export default function HomePage() {
         </section>
 
         {/* Stats Section */}
-        <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+        <section className="py-16 sm:py-20 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto text-center">
-              {[
-                { 
-                  icon: Users, 
-                  value: stats ? formatNumber(stats.totalUsers) : "...", 
-                  label: "Active Users",
-                  subLabel: stats ? `${stats.usersToday} today` : undefined
-                },
-                { 
-                  icon: Link2, 
-                  value: stats ? formatNumber(stats.totalLinks) : "...", 
-                  label: "Links Created",
-                  subLabel: stats ? `${stats.linksToday} today` : undefined
-                },
-                { 
-                  icon: TrendingUp, 
-                  value: stats ? formatNumber(stats.totalClicks) : "...", 
-                  label: "Clicks Tracked",
-                  subLabel: stats ? `${stats.clicksToday} today` : undefined
-                },
-                { 
-                  icon: Star, 
-                  value: stats ? `${stats.averageRating}/5` : "...", 
-                  label: "User Rating" 
-                },
-              ].map((stat, idx) => {
-                const Icon = stat.icon;
-                return (
-                  <motion.div
-                    key={idx}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: idx * 0.1 }}
-                    className="flex flex-col items-center"
-                  >
-                    <Icon className="h-8 w-8 mb-3 opacity-90" />
-                    <div className="text-4xl font-bold mb-2">{stat.value}</div>
-                    <div className="text-blue-100 text-sm font-medium">{stat.label}</div>
-                    {stat.subLabel && (
-                      <div className="text-blue-200 text-xs mt-1 opacity-75">{stat.subLabel}</div>
-                    )}
-                  </motion.div>
-                );
-              })}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 max-w-5xl mx-auto text-center">
+                {[
+                  { 
+                    icon: Users, 
+                    value: stats ? formatNumber(stats.totalUsers) : "...", 
+                    label: "Active Users",
+                    subLabel: stats ? `${stats.usersToday} today` : undefined
+                  },
+                  { 
+                    icon: Link2, 
+                    value: stats ? formatNumber(stats.totalLinks) : "...", 
+                    label: "Links Created",
+                    subLabel: stats ? `${stats.linksToday} today` : undefined
+                  },
+                  { 
+                    icon: TrendingUp, 
+                    value: stats ? formatNumber(stats.totalClicks) : "...", 
+                    label: "Clicks Tracked",
+                    subLabel: stats ? `${stats.clicksToday} today` : undefined
+                  },
+                  { 
+                    icon: Star, 
+                    value: stats ? `${stats.averageRating}/5` : "...", 
+                    label: "User Rating" 
+                  },
+                ].map((stat, idx) => {
+                  const Icon = stat.icon;
+                  return (
+                    <motion.div
+                      key={idx}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: idx * 0.1 }}
+                      whileHover={{ scale: 1.05 }}
+                      className="flex flex-col items-center group cursor-default"
+                    >
+                      <motion.div
+                        whileHover={{ rotate: [0, -10, 10, -10, 0] }}
+                        transition={{ duration: 0.5 }}
+                      >
+                        <Icon className="h-6 w-6 sm:h-8 sm:w-8 mb-2 sm:mb-3 opacity-90 group-hover:opacity-100 transition-opacity" />
+                      </motion.div>
+                      <div className="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 sm:mb-2 group-hover:scale-110 transition-transform">{stat.value}</div>
+                      <div className="text-blue-100 text-xs sm:text-sm font-medium">{stat.label}</div>
+                      {stat.subLabel && (
+                        <div className="text-blue-200 text-xs mt-1 opacity-75 hidden sm:block">{stat.subLabel}</div>
+                      )}
+                    </motion.div>
+                  );
+                })}
             </div>
           </div>
         </section>
@@ -319,7 +438,7 @@ export default function HomePage() {
               transition={{ duration: 0.6 }}
               className="text-center mb-16"
             >
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight px-4">
                 <span className="text-white">
                   Built for
                 </span>
@@ -328,12 +447,12 @@ export default function HomePage() {
                   everyone
                 </span>
               </h2>
-              <p className="text-xl text-gray-400 max-w-2xl mx-auto mt-4">
+              <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mt-4 px-4">
                 From creators to businesses, Linkly adapts to your unique needs.
               </p>
             </motion.div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto mb-12">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-7xl mx-auto mb-12 px-4">
               {[
                 {
                   title: "Content Creators",
@@ -384,13 +503,33 @@ export default function HomePage() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: idx * 0.1 }}
-                  className="group relative"
+                  whileHover={{ scale: 1.02, y: -5 }}
+                  className="group relative cursor-pointer"
                 >
-                  <div className={`absolute -inset-0.5 bg-gradient-to-r ${item.gradientBorder} rounded-2xl opacity-0 group-hover:opacity-100 blur transition duration-500`} />
-                  <div className={`relative h-full bg-gradient-to-br ${item.gradient} backdrop-blur-xl rounded-2xl p-8 border border-white/10 hover:border-white/20 transition-all duration-300`}>
-                    <div className="text-6xl mb-4">{item.emoji}</div>
-                    <h3 className="text-2xl font-bold mb-3 text-white">{item.title}</h3>
-                    <p className="text-gray-300 leading-relaxed">{item.description}</p>
+                  <motion.div 
+                    className={`absolute -inset-0.5 bg-gradient-to-r ${item.gradientBorder} rounded-2xl blur`}
+                    initial={{ opacity: 0 }}
+                    whileHover={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                  <div className={`relative h-full bg-gradient-to-br ${item.gradient} backdrop-blur-xl rounded-2xl p-6 sm:p-8 border border-white/10 hover:border-white/20 transition-all duration-300 overflow-hidden`}>
+                    <motion.div
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                      className="text-4xl sm:text-5xl md:text-6xl mb-3 sm:mb-4 inline-block"
+                    >
+                      {item.emoji}
+                    </motion.div>
+                    <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-3 text-white">{item.title}</h3>
+                    <p className="text-sm sm:text-base text-gray-300 leading-relaxed">{item.description}</p>
+                    
+                    {/* Animated background blob */}
+                    <motion.div
+                      className="absolute -top-10 -right-10 w-32 h-32 bg-white/5 rounded-full blur-2xl"
+                      initial={{ scale: 0 }}
+                      whileHover={{ scale: 1 }}
+                      transition={{ duration: 0.5 }}
+                    />
                   </div>
                 </motion.div>
               ))}
@@ -432,7 +571,7 @@ export default function HomePage() {
               transition={{ duration: 0.6 }}
               className="text-center mb-20"
             >
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight px-4">
                 <span className="bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
                   Completely free.
                 </span>
@@ -441,7 +580,7 @@ export default function HomePage() {
                   Forever.
                 </span>
               </h2>
-              <p className="text-xl text-gray-600">No credit card required. No hidden fees. No limitations.</p>
+              <p className="text-base sm:text-lg md:text-xl text-gray-600 px-4">No credit card required. No hidden fees. No limitations.</p>
             </motion.div>
 
             <div className="max-w-4xl mx-auto">
@@ -450,16 +589,16 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="relative p-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl text-white shadow-2xl border-2 border-blue-500"
+                className="relative p-6 sm:p-8 md:p-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl text-white shadow-2xl border-2 border-blue-500"
               >
-                <div className="absolute top-6 right-6 bg-green-400 text-gray-900 px-4 py-1.5 rounded-full text-sm font-bold">
+                <div className="absolute top-4 right-4 sm:top-6 sm:right-6 bg-green-400 text-gray-900 px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-xs sm:text-sm font-bold">
                   100% Free
                 </div>
-                <h3 className="text-3xl font-bold mb-2">Everything You Need</h3>
-                <div className="text-5xl font-bold mb-6">
-                  $0<span className="text-xl opacity-90 font-normal">/forever</span>
+                <h3 className="text-2xl sm:text-3xl font-bold mb-2">Everything You Need</h3>
+                <div className="text-4xl sm:text-5xl font-bold mb-6">
+                  $0<span className="text-lg sm:text-xl opacity-90 font-normal">/forever</span>
                 </div>
-                <ul className="space-y-4 mb-10">
+                <ul className="space-y-3 sm:space-y-4 mb-8 sm:mb-10">
                   {[
                     "Unlimited links",
                     "All templates included",
@@ -470,9 +609,9 @@ export default function HomePage() {
                     "Priority support",
                     "No branding required",
                   ].map((item) => (
-                    <li key={item} className="flex items-center gap-3">
-                      <Check className="h-5 w-5 flex-shrink-0" />
-                      <span>{item}</span>
+                    <li key={item} className="flex items-center gap-2 sm:gap-3">
+                      <Check className="h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
+                      <span className="text-sm sm:text-base">{item}</span>
                     </li>
                   ))}
                 </ul>
@@ -498,33 +637,33 @@ export default function HomePage() {
               transition={{ duration: 0.6 }}
               className="max-w-4xl mx-auto"
             >
-              <h2 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 pb-2">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight px-4">
                 <span className="bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
                   Create your Linkly
                 </span>
               </h2>
-              <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
+              <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-8 sm:mb-12 max-w-2xl mx-auto px-4">
                 Join thousands sharing everything they create from one simple link
               </p>
               
-              <div className="max-w-2xl mx-auto">
-                <div className="flex flex-col sm:flex-row items-center gap-3 p-3 bg-white rounded-2xl shadow-2xl border border-gray-200">
-                  <div className="flex items-center flex-1 w-full px-4 py-4 bg-gray-50 rounded-xl">
-                    <span className="text-gray-400 font-medium">linkly.to/</span>
+              <div className="max-w-2xl mx-auto px-4">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 p-2 sm:p-3 bg-white rounded-2xl shadow-2xl border border-gray-200">
+                  <div className="flex items-center flex-1 w-full px-3 sm:px-4 py-3 sm:py-4 bg-gray-50 rounded-xl">
+                    <span className="text-gray-400 font-medium text-sm sm:text-base">linkly.to/</span>
                     <input
                       type="text"
                       placeholder="yourname"
-                      className="flex-1 bg-transparent border-none outline-none text-gray-400 text-lg placeholder:text-gray-400"
+                      className="flex-1 bg-transparent border-none outline-none text-gray-400 text-sm sm:text-base md:text-lg placeholder:text-gray-400"
                     />
                   </div>
                   <Link
                     href="/login"
-                    className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-bold text-lg hover:shadow-xl hover:shadow-blue-500/25 hover:scale-105 transition-all duration-300 whitespace-nowrap"
+                    className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-bold text-base sm:text-lg hover:shadow-xl hover:shadow-blue-500/25 hover:scale-105 transition-all duration-300 whitespace-nowrap text-center"
                   >
                     Claim your link
                   </Link>
                 </div>
-                <p className="text-sm text-gray-500 mt-6">
+                <p className="text-xs sm:text-sm text-gray-500 mt-4 sm:mt-6">
                   Free forever • No credit card • Set up in 2 minutes
                 </p>
               </div>
