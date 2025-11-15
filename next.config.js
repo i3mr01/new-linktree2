@@ -26,6 +26,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: '**.firebase storage.googleapis.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'api.dicebear.com',
+      },
     ],
   },
 };

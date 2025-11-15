@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import {
   Link2,
@@ -22,8 +23,6 @@ import {
   Music2,
   Monitor,
   Smartphone,
-  ExternalLink,
-  Sparkles,
 } from "lucide-react";
 import gsap from "gsap";
 
@@ -259,10 +258,12 @@ export default function HomePage() {
                           >
                             <div className="relative mb-3">
                               <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 p-0.5 shadow-lg">
-                                <div className="w-full h-full rounded-full bg-white flex items-center justify-center">
-                                  <img 
+                                <div className="w-full h-full rounded-full bg-white flex items-center justify-center overflow-hidden">
+                                  <Image 
                                     src="https://api.dicebear.com/7.x/avataaars/svg?seed=Alex" 
                                     alt="Profile" 
+                                    width={80}
+                                    height={80}
                                     className="w-full h-full rounded-full"
                                   />
                                 </div>
@@ -384,10 +385,12 @@ export default function HomePage() {
                             >
                               <div className="relative mb-3">
                                 <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 p-0.5 shadow-lg">
-                                  <div className="w-full h-full rounded-full bg-white flex items-center justify-center">
-                                    <img 
+                                  <div className="w-full h-full rounded-full bg-white flex items-center justify-center overflow-hidden">
+                                    <Image 
                                       src="https://api.dicebear.com/7.x/avataaars/svg?seed=Alex" 
                                       alt="Profile" 
+                                      width={64}
+                                      height={64}
                                       className="w-full h-full rounded-full"
                                     />
                                   </div>
