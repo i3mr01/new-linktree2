@@ -20,6 +20,10 @@ import {
   Twitter,
   Youtube,
   Music2,
+  Monitor,
+  Smartphone,
+  ExternalLink,
+  Sparkles,
 } from "lucide-react";
 import gsap from "gsap";
 
@@ -53,6 +57,7 @@ export default function HomePage() {
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   const [stats, setStats] = useState<Stats | null>(null);
   const [hoveredFeature, setHoveredFeature] = useState<number | null>(null);
+  const [isMobileView, setIsMobileView] = useState(false);
 
   useEffect(() => {
     if (heroRef.current) {
@@ -189,166 +194,309 @@ export default function HomePage() {
                 transition={{ delay: 0.8, duration: 0.6 }}
                 className="mt-16 hero-element"
               >
-                {/* Browser Mockup */}
-                <div className="relative max-w-4xl mx-auto">
-                  {/* Browser Chrome */}
-                  <div className="bg-gray-100 rounded-t-2xl p-3 border border-b-0 border-gray-200">
-                    <div className="flex items-center gap-2">
-                      <div className="flex gap-1.5">
-                        <div className="w-3 h-3 rounded-full bg-red-500" />
-                        <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                        <div className="w-3 h-3 rounded-full bg-green-500" />
-                      </div>
-                      <div className="flex-1 ml-4">
-                        <div className="bg-white rounded-lg px-4 py-1.5 text-sm text-gray-600 flex items-center gap-2">
-                          <Globe className="h-3.5 w-3.5 text-gray-400" />
-                          <span className="font-medium">linkly.to/yourname</span>
-                        </div>
-                      </div>
-                    </div>
+                {/* View Toggle */}
+                <div className="flex justify-center mb-6">
+                  <div className="inline-flex items-center gap-2 p-1.5 bg-white rounded-xl shadow-lg border border-gray-200">
+                    <button
+                      onClick={() => setIsMobileView(false)}
+                      className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all ${
+                        !isMobileView
+                          ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
+                          : "text-gray-600 hover:text-gray-900"
+                      }`}
+                    >
+                      <Monitor className="h-4 w-4" />
+                      Desktop
+                    </button>
+                    <button
+                      onClick={() => setIsMobileView(true)}
+                      className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all ${
+                        isMobileView
+                          ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md"
+                          : "text-gray-600 hover:text-gray-900"
+                      }`}
+                    >
+                      <Smartphone className="h-4 w-4" />
+                      Mobile
+                    </button>
                   </div>
-                  
-                  {/* Browser Content */}
-                  <div className="relative rounded-b-2xl overflow-hidden shadow-2xl border border-t-0 border-gray-200">
-                    <div className="relative bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50 p-6 sm:p-8 md:p-12 overflow-hidden">
-                      {/* Decorative Background Elements */}
-                      <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl" />
-                      <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-br from-pink-400/20 to-violet-400/20 rounded-full blur-3xl" />
-                      
-                      {/* Profile Section */}
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ delay: 1.2, type: "spring" }}
-                        className="relative flex flex-col items-center mb-8"
-                      >
-                        <div className="relative mb-4">
-                          {/* Profile Image with Ring */}
-                          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 p-1 shadow-xl">
-                            <div className="w-full h-full rounded-full bg-white flex items-center justify-center">
-                              <div className="w-full h-full rounded-full bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center text-white text-2xl sm:text-3xl font-bold">
-                                AJ
-                              </div>
+                </div>
+
+                {/* Device Mockup */}
+                <div className={`relative mx-auto transition-all duration-500 ${isMobileView ? "max-w-sm" : "max-w-5xl"}`}>
+                  {!isMobileView ? (
+                    // Desktop View
+                    <div className="relative">
+                      {/* Browser Chrome */}
+                      <div className="bg-gray-900 rounded-t-2xl p-3 border border-b-0 border-gray-800">
+                        <div className="flex items-center gap-2">
+                          <div className="flex gap-2">
+                            <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                            <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+                            <div className="w-3 h-3 rounded-full bg-green-500/80" />
+                          </div>
+                          <div className="flex-1 ml-4 mr-4">
+                            <div className="bg-gray-800 rounded-lg px-4 py-2 text-sm text-gray-400 flex items-center gap-2">
+                              <Globe className="h-3.5 w-3.5" />
+                              <span className="font-medium text-gray-300">linkly.to/alexjohnson</span>
+                              <Sparkles className="h-3.5 w-3.5 text-blue-400 ml-auto" />
                             </div>
                           </div>
-                          {/* Verified Badge */}
-                          <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-blue-500 rounded-full flex items-center justify-center border-2 border-white shadow-md">
-                            <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                            </svg>
-                          </div>
                         </div>
-                        <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-1">Alex Johnson</h3>
-                        <p className="text-sm sm:text-base text-gray-600 mb-3">Digital Creator & Entrepreneur</p>
-                        <div className="flex items-center gap-2 text-xs text-gray-500">
-                          <div className="flex items-center gap-1">
-                            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                            <span>Active now</span>
-                          </div>
-                          <span>•</span>
-                          <span>2.5K followers</span>
-                        </div>
-                      </motion.div>
-
-                      {/* Links */}
-                      <div className="relative space-y-3 max-w-lg mx-auto">
-                        {[
-                          { 
-                            title: "🎨 My Creative Portfolio", 
-                            subtitle: "Latest designs & projects",
-                            gradient: "from-blue-500 to-cyan-500",
-                            borderGradient: "from-blue-400 to-cyan-400",
-                            delay: 1.4 
-                          },
-                          { 
-                            title: "🎥 Watch My Latest Video", 
-                            subtitle: "How I grew to 100K subscribers",
-                            gradient: "from-red-500 to-pink-500",
-                            borderGradient: "from-red-400 to-pink-400",
-                            delay: 1.5 
-                          },
-                          { 
-                            title: "🛍️ Shop Exclusive Merch", 
-                            subtitle: "Limited edition items",
-                            gradient: "from-purple-500 to-fuchsia-500",
-                            borderGradient: "from-purple-400 to-fuchsia-400",
-                            delay: 1.6 
-                          },
-                          { 
-                            title: "📅 Book a 1-on-1 Call", 
-                            subtitle: "30 min consultation",
-                            gradient: "from-emerald-500 to-teal-500",
-                            borderGradient: "from-emerald-400 to-teal-400",
-                            delay: 1.7 
-                          },
-                        ].map((link, idx) => (
+                      </div>
+                      
+                      {/* Browser Content */}
+                      <div className="relative rounded-b-2xl overflow-hidden shadow-2xl border border-t-0 border-gray-800">
+                        <div className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-8 md:p-12 overflow-hidden min-h-[600px]">
+                          {/* Animated Grid Background */}
+                          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000,transparent)]" />
+                          
+                          {/* Gradient Orbs */}
+                          <div className="absolute top-1/4 -left-48 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl" />
+                          <div className="absolute bottom-1/4 -right-48 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl" />
+                          
+                          {/* Profile Section */}
                           <motion.div
-                            key={idx}
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: link.delay }}
-                            className="group relative"
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ delay: 1.2, type: "spring" }}
+                            className="relative flex flex-col items-center mb-10"
                           >
-                            <div className={`absolute -inset-0.5 bg-gradient-to-r ${link.borderGradient} opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-300 blur-sm`} />
-                            <div className="relative bg-white/90 backdrop-blur-sm hover:bg-white rounded-xl p-3.5 sm:p-4 shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer border border-gray-200/50">
-                              <div className="flex items-center justify-between">
-                                <div className="flex-1">
-                                  <div className="font-semibold text-sm sm:text-base text-gray-900 mb-0.5">{link.title}</div>
-                                  <div className="text-xs text-gray-500">{link.subtitle}</div>
-                                </div>
-                                <div className={`flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br ${link.gradient} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                                  <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+                            <div className="relative mb-6">
+                              <div className="w-28 h-28 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 p-0.5 shadow-2xl">
+                                <div className="w-full h-full rounded-full bg-slate-900 flex items-center justify-center border-4 border-slate-800">
+                                  <img 
+                                    src="https://api.dicebear.com/7.x/avataaars/svg?seed=Alex" 
+                                    alt="Profile" 
+                                    className="w-full h-full rounded-full"
+                                  />
                                 </div>
                               </div>
+                              <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center border-4 border-slate-900 shadow-lg">
+                                <Check className="w-4 h-4 text-white" strokeWidth={3} />
+                              </div>
+                            </div>
+                            <h3 className="text-3xl font-bold text-white mb-2">Alex Johnson</h3>
+                            <p className="text-gray-400 mb-4">Digital Product Designer • Creator</p>
+                            <div className="flex items-center gap-4 text-sm text-gray-500">
+                              <div className="flex items-center gap-2">
+                                <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
+                                <span>Online</span>
+                              </div>
+                              <span>•</span>
+                              <span>San Francisco, CA</span>
                             </div>
                           </motion.div>
-                        ))}
-                      </div>
 
-                      {/* Social Icons */}
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 1.8 }}
-                        className="relative flex justify-center gap-3 mt-8"
-                      >
-                        {[
-                          { name: "Instagram", gradient: "from-purple-500 via-pink-500 to-orange-500", Icon: Instagram },
-                          { name: "Twitter", gradient: "from-blue-400 to-blue-600", Icon: Twitter },
-                          { name: "YouTube", gradient: "from-red-500 to-red-600", Icon: Youtube },
-                          { name: "TikTok", gradient: "from-gray-800 to-gray-900", Icon: Music2 },
-                        ].map((social, idx) => {
-                          const SocialIcon = social.Icon;
-                          return (
+                          {/* Links Grid */}
+                          <div className="relative grid gap-3 max-w-2xl mx-auto">
+                            {[
+                              { 
+                                title: "Portfolio & Case Studies", 
+                                subtitle: "View my latest design work",
+                                icon: Palette,
+                                gradient: "from-blue-500 to-cyan-500",
+                                delay: 1.4 
+                              },
+                              { 
+                                title: "YouTube Channel", 
+                                subtitle: "Design tutorials & tips",
+                                icon: Youtube,
+                                gradient: "from-red-500 to-pink-500",
+                                delay: 1.5 
+                              },
+                              { 
+                                title: "Shop Design Assets", 
+                                subtitle: "Premium UI kits & templates",
+                                icon: Star,
+                                gradient: "from-purple-500 to-fuchsia-500",
+                                delay: 1.6 
+                              },
+                              { 
+                                title: "Book Consultation", 
+                                subtitle: "1-hour strategy session",
+                                icon: Users,
+                                gradient: "from-emerald-500 to-teal-500",
+                                delay: 1.7 
+                              },
+                            ].map((link, idx) => {
+                              const IconComponent = link.icon;
+                              return (
+                                <motion.div
+                                  key={idx}
+                                  initial={{ opacity: 0, y: 20 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  transition={{ delay: link.delay }}
+                                  className="group relative"
+                                >
+                                  <div className={`absolute -inset-0.5 bg-gradient-to-r ${link.gradient} opacity-20 group-hover:opacity-40 rounded-2xl transition-opacity duration-300 blur-xl`} />
+                                  <div className="relative bg-slate-800/50 backdrop-blur-xl hover:bg-slate-800/70 rounded-2xl p-5 border border-slate-700/50 hover:border-slate-600 transition-all duration-300 cursor-pointer">
+                                    <div className="flex items-center gap-4">
+                                      <div className={`flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br ${link.gradient} flex items-center justify-center shadow-lg`}>
+                                        <IconComponent className="h-6 w-6 text-white" />
+                                      </div>
+                                      <div className="flex-1 min-w-0">
+                                        <div className="font-semibold text-white mb-1">{link.title}</div>
+                                        <div className="text-sm text-gray-400">{link.subtitle}</div>
+                                      </div>
+                                      <ExternalLink className="h-5 w-5 text-gray-500 group-hover:text-gray-300 transition-colors flex-shrink-0" />
+                                    </div>
+                                  </div>
+                                </motion.div>
+                              );
+                            })}
+                          </div>
+
+                          {/* Social Links */}
+                          <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 1.8 }}
+                            className="relative flex justify-center gap-4 mt-10"
+                          >
+                            {[
+                              { name: "Instagram", Icon: Instagram, gradient: "from-purple-500 via-pink-500 to-orange-500" },
+                              { name: "Twitter", Icon: Twitter, gradient: "from-blue-400 to-blue-600" },
+                              { name: "YouTube", Icon: Youtube, gradient: "from-red-500 to-red-600" },
+                              { name: "TikTok", Icon: Music2, gradient: "from-gray-700 to-gray-900" },
+                            ].map((social, idx) => {
+                              const SocialIcon = social.Icon;
+                              return (
+                                <motion.div
+                                  key={social.name}
+                                  initial={{ scale: 0 }}
+                                  animate={{ scale: 1 }}
+                                  transition={{ delay: 1.9 + idx * 0.1, type: "spring" }}
+                                  whileHover={{ scale: 1.1, y: -3 }}
+                                  className={`w-12 h-12 rounded-xl bg-gradient-to-br ${social.gradient} shadow-lg hover:shadow-2xl transition-all cursor-pointer flex items-center justify-center`}
+                                >
+                                  <SocialIcon className="w-5 h-5 text-white" />
+                                </motion.div>
+                              );
+                            })}
+                          </motion.div>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    // Mobile View
+                    <div className="relative">
+                      {/* Phone Frame */}
+                      <div className="bg-gray-900 rounded-[3rem] p-3 shadow-2xl border-8 border-gray-900">
+                        {/* Notch */}
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-7 bg-gray-900 rounded-b-2xl" />
+                        
+                        {/* Screen */}
+                        <div className="relative rounded-[2.5rem] overflow-hidden shadow-inner bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 h-[650px] overflow-y-auto">
+                          {/* Background */}
+                          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:2rem_2rem]" />
+                          
+                          <div className="relative p-6">
+                            {/* Profile */}
                             <motion.div
-                              key={social.name}
                               initial={{ scale: 0 }}
                               animate={{ scale: 1 }}
-                              transition={{ delay: 1.9 + idx * 0.1, type: "spring" }}
-                              whileHover={{ scale: 1.1, y: -2 }}
-                              className={`w-11 h-11 rounded-xl bg-gradient-to-br ${social.gradient} shadow-lg hover:shadow-xl transition-all cursor-pointer flex items-center justify-center`}
+                              transition={{ delay: 1.2, type: "spring" }}
+                              className="flex flex-col items-center mb-8"
                             >
-                              <SocialIcon className="w-5 h-5 text-white" />
+                              <div className="relative mb-4">
+                                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 p-0.5 shadow-xl">
+                                  <div className="w-full h-full rounded-full bg-slate-900 flex items-center justify-center border-4 border-slate-800">
+                                    <img 
+                                      src="https://api.dicebear.com/7.x/avataaars/svg?seed=Alex" 
+                                      alt="Profile" 
+                                      className="w-full h-full rounded-full"
+                                    />
+                                  </div>
+                                </div>
+                                <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-blue-500 rounded-full flex items-center justify-center border-3 border-slate-900">
+                                  <Check className="w-3.5 h-3.5 text-white" strokeWidth={3} />
+                                </div>
+                              </div>
+                              <h3 className="text-2xl font-bold text-white mb-1">Alex Johnson</h3>
+                              <p className="text-gray-400 text-sm text-center mb-3">Digital Product Designer</p>
+                              <div className="flex items-center gap-2 text-xs text-gray-500">
+                                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
+                                <span>Online</span>
+                              </div>
                             </motion.div>
-                          );
-                        })}
-                      </motion.div>
+
+                            {/* Links */}
+                            <div className="space-y-3">
+                              {[
+                                { title: "Portfolio", icon: Palette, gradient: "from-blue-500 to-cyan-500", delay: 1.4 },
+                                { title: "YouTube", icon: Youtube, gradient: "from-red-500 to-pink-500", delay: 1.5 },
+                                { title: "Shop Assets", icon: Star, gradient: "from-purple-500 to-fuchsia-500", delay: 1.6 },
+                                { title: "Book Call", icon: Users, gradient: "from-emerald-500 to-teal-500", delay: 1.7 },
+                              ].map((link, idx) => {
+                                const IconComponent = link.icon;
+                                return (
+                                  <motion.div
+                                    key={idx}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: link.delay }}
+                                    className="group relative"
+                                  >
+                                    <div className={`absolute -inset-0.5 bg-gradient-to-r ${link.gradient} opacity-20 group-hover:opacity-40 rounded-xl transition-opacity blur-lg`} />
+                                    <div className="relative bg-slate-800/50 backdrop-blur-xl rounded-xl p-4 border border-slate-700/50 flex items-center gap-3">
+                                      <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${link.gradient} flex items-center justify-center`}>
+                                        <IconComponent className="h-5 w-5 text-white" />
+                                      </div>
+                                      <span className="font-semibold text-white flex-1">{link.title}</span>
+                                      <ExternalLink className="h-4 w-4 text-gray-500" />
+                                    </div>
+                                  </motion.div>
+                                );
+                              })}
+                            </div>
+
+                            {/* Social */}
+                            <motion.div
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              transition={{ delay: 1.8 }}
+                              className="flex justify-center gap-3 mt-8"
+                            >
+                              {[
+                                { Icon: Instagram, gradient: "from-purple-500 via-pink-500 to-orange-500" },
+                                { Icon: Twitter, gradient: "from-blue-400 to-blue-600" },
+                                { Icon: Youtube, gradient: "from-red-500 to-red-600" },
+                                { Icon: Music2, gradient: "from-gray-700 to-gray-900" },
+                              ].map((social, idx) => {
+                                const SocialIcon = social.Icon;
+                                return (
+                                  <motion.div
+                                    key={idx}
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    transition={{ delay: 1.9 + idx * 0.1, type: "spring" }}
+                                    className={`w-11 h-11 rounded-xl bg-gradient-to-br ${social.gradient} shadow-lg flex items-center justify-center`}
+                                  >
+                                    <SocialIcon className="w-5 h-5 text-white" />
+                                  </motion.div>
+                                );
+                              })}
+                            </motion.div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   {/* Floating Analytics Badge */}
                   <motion.div
                     initial={{ opacity: 0, scale: 0.8, y: 20 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     transition={{ delay: 2, type: "spring" }}
-                    className="hidden sm:block absolute -bottom-6 -right-6 bg-white rounded-2xl shadow-2xl p-4 border border-gray-200"
+                    className={`hidden lg:block absolute -bottom-6 ${isMobileView ? "-right-8" : "-right-6"} bg-white rounded-2xl shadow-2xl p-4 border border-gray-200`}
                   >
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center">
                         <TrendingUp className="h-6 w-6 text-white" />
                       </div>
                       <div>
-                        <div className="text-2xl font-bold text-gray-900">1.2K</div>
+                        <div className="text-2xl font-bold text-gray-900">3.4K</div>
                         <div className="text-xs text-gray-600">Clicks today</div>
                       </div>
                     </div>
