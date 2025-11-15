@@ -206,28 +206,77 @@ export default function HomePage() {
                   
                   {/* Browser Content */}
                   <div className="relative rounded-b-2xl overflow-hidden shadow-2xl border border-t-0 border-gray-200">
-                    <div className="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-6 sm:p-8 md:p-12">
+                    <div className="relative bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50 p-6 sm:p-8 md:p-12 overflow-hidden">
+                      {/* Decorative Background Elements */}
+                      <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl" />
+                      <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-br from-pink-400/20 to-violet-400/20 rounded-full blur-3xl" />
+                      
                       {/* Profile Section */}
                       <motion.div
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={{ delay: 1.2, type: "spring" }}
-                        className="flex flex-col items-center mb-8"
+                        className="relative flex flex-col items-center mb-8"
                       >
-                        <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 mb-3 sm:mb-4 flex items-center justify-center text-white text-2xl sm:text-3xl font-bold shadow-lg">
-                          YN
+                        <div className="relative mb-4">
+                          {/* Profile Image with Ring */}
+                          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 p-1 shadow-xl">
+                            <div className="w-full h-full rounded-full bg-white flex items-center justify-center">
+                              <div className="w-full h-full rounded-full bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center text-white text-2xl sm:text-3xl font-bold">
+                                AJ
+                              </div>
+                            </div>
+                          </div>
+                          {/* Verified Badge */}
+                          <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-blue-500 rounded-full flex items-center justify-center border-2 border-white shadow-md">
+                            <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                            </svg>
+                          </div>
                         </div>
-                        <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-1">Your Name</h3>
-                        <p className="text-sm sm:text-base text-gray-600">Content Creator & Designer</p>
+                        <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-1">Alex Johnson</h3>
+                        <p className="text-sm sm:text-base text-gray-600 mb-3">Digital Creator & Entrepreneur</p>
+                        <div className="flex items-center gap-2 text-xs text-gray-500">
+                          <div className="flex items-center gap-1">
+                            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                            <span>Active now</span>
+                          </div>
+                          <span>•</span>
+                          <span>2.5K followers</span>
+                        </div>
                       </motion.div>
 
                       {/* Links */}
-                      <div className="space-y-3 max-w-lg mx-auto">
+                      <div className="relative space-y-3 max-w-lg mx-auto">
                         {[
-                          { title: "My Portfolio", gradient: "from-blue-500 to-cyan-500", delay: 1.4 },
-                          { title: "Latest YouTube Video", gradient: "from-red-500 to-pink-500", delay: 1.5 },
-                          { title: "Shop My Merch", gradient: "from-purple-500 to-pink-500", delay: 1.6 },
-                          { title: "Book a Call", gradient: "from-green-500 to-emerald-500", delay: 1.7 },
+                          { 
+                            title: "🎨 My Creative Portfolio", 
+                            subtitle: "Latest designs & projects",
+                            gradient: "from-blue-500 to-cyan-500",
+                            borderGradient: "from-blue-400 to-cyan-400",
+                            delay: 1.4 
+                          },
+                          { 
+                            title: "🎥 Watch My Latest Video", 
+                            subtitle: "How I grew to 100K subscribers",
+                            gradient: "from-red-500 to-pink-500",
+                            borderGradient: "from-red-400 to-pink-400",
+                            delay: 1.5 
+                          },
+                          { 
+                            title: "🛍️ Shop Exclusive Merch", 
+                            subtitle: "Limited edition items",
+                            gradient: "from-purple-500 to-fuchsia-500",
+                            borderGradient: "from-purple-400 to-fuchsia-400",
+                            delay: 1.6 
+                          },
+                          { 
+                            title: "📅 Book a 1-on-1 Call", 
+                            subtitle: "30 min consultation",
+                            gradient: "from-emerald-500 to-teal-500",
+                            borderGradient: "from-emerald-400 to-teal-400",
+                            delay: 1.7 
+                          },
                         ].map((link, idx) => (
                           <motion.div
                             key={idx}
@@ -236,11 +285,16 @@ export default function HomePage() {
                             transition={{ delay: link.delay }}
                             className="group relative"
                           >
-                            <div className={`absolute inset-0 bg-gradient-to-r ${link.gradient} opacity-0 group-hover:opacity-100 rounded-xl transition-opacity blur`} />
-                            <div className="relative bg-white hover:bg-gray-50 rounded-xl p-3 sm:p-4 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-200">
+                            <div className={`absolute -inset-0.5 bg-gradient-to-r ${link.borderGradient} opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-300 blur-sm`} />
+                            <div className="relative bg-white/90 backdrop-blur-sm hover:bg-white rounded-xl p-3.5 sm:p-4 shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer border border-gray-200/50">
                               <div className="flex items-center justify-between">
-                                <span className="font-semibold text-sm sm:text-base text-gray-900">{link.title}</span>
-                                <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400 group-hover:translate-x-1 transition-transform" />
+                                <div className="flex-1">
+                                  <div className="font-semibold text-sm sm:text-base text-gray-900 mb-0.5">{link.title}</div>
+                                  <div className="text-xs text-gray-500">{link.subtitle}</div>
+                                </div>
+                                <div className={`flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-gradient-to-br ${link.gradient} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                                  <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+                                </div>
                               </div>
                             </div>
                           </motion.div>
@@ -252,15 +306,24 @@ export default function HomePage() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 1.8 }}
-                        className="flex justify-center gap-4 mt-8"
+                        className="relative flex justify-center gap-3 mt-8"
                       >
-                        {["Instagram", "Twitter", "YouTube", "TikTok"].map((social) => (
-                          <div
-                            key={social}
-                            className="w-10 h-10 rounded-full bg-white shadow-md hover:shadow-lg transition-shadow cursor-pointer flex items-center justify-center text-gray-600 hover:text-gray-900"
+                        {[
+                          { name: "Instagram", gradient: "from-purple-500 via-pink-500 to-orange-500", icon: "📷" },
+                          { name: "Twitter", gradient: "from-blue-400 to-blue-600", icon: "🐦" },
+                          { name: "YouTube", gradient: "from-red-500 to-red-600", icon: "▶️" },
+                          { name: "TikTok", gradient: "from-gray-800 to-gray-900", icon: "🎵" },
+                        ].map((social, idx) => (
+                          <motion.div
+                            key={social.name}
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ delay: 1.9 + idx * 0.1, type: "spring" }}
+                            whileHover={{ scale: 1.1, y: -2 }}
+                            className={`w-11 h-11 rounded-xl bg-gradient-to-br ${social.gradient} shadow-lg hover:shadow-xl transition-all cursor-pointer flex items-center justify-center text-lg`}
                           >
-                            <div className="w-5 h-5 bg-gradient-to-br from-gray-400 to-gray-600 rounded-full" />
-                          </div>
+                            {social.icon}
+                          </motion.div>
                         ))}
                       </motion.div>
                     </div>
