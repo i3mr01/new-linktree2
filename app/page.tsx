@@ -223,48 +223,43 @@ export default function HomePage() {
                 </div>
 
                 {/* Device Mockup */}
-                <div className={`relative mx-auto transition-all duration-500 ${isMobileView ? "max-w-sm" : "max-w-5xl"}`}>
+                <div className={`relative mx-auto transition-all duration-500 ${isMobileView ? "max-w-[280px]" : "max-w-3xl"}`}>
                   {!isMobileView ? (
                     // Desktop View
                     <div className="relative">
                       {/* Browser Chrome */}
-                      <div className="bg-gray-900 rounded-t-2xl p-3 border border-b-0 border-gray-800">
+                      <div className="bg-gray-100 rounded-t-xl p-2.5 border border-b-0 border-gray-200">
                         <div className="flex items-center gap-2">
-                          <div className="flex gap-2">
-                            <div className="w-3 h-3 rounded-full bg-red-500/80" />
-                            <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-                            <div className="w-3 h-3 rounded-full bg-green-500/80" />
+                          <div className="flex gap-1.5">
+                            <div className="w-2.5 h-2.5 rounded-full bg-red-400" />
+                            <div className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
+                            <div className="w-2.5 h-2.5 rounded-full bg-green-400" />
                           </div>
-                          <div className="flex-1 ml-4 mr-4">
-                            <div className="bg-gray-800 rounded-lg px-4 py-2 text-sm text-gray-400 flex items-center gap-2">
-                              <Globe className="h-3.5 w-3.5" />
-                              <span className="font-medium text-gray-300">linkly.to/alexjohnson</span>
-                              <Sparkles className="h-3.5 w-3.5 text-blue-400 ml-auto" />
+                          <div className="flex-1 ml-3 mr-3">
+                            <div className="bg-white rounded-md px-3 py-1.5 text-xs text-gray-500 flex items-center gap-2 border border-gray-200">
+                              <Globe className="h-3 w-3 text-gray-400" />
+                              <span className="font-medium">linkly.to/alexjohnson</span>
                             </div>
                           </div>
                         </div>
                       </div>
                       
                       {/* Browser Content */}
-                      <div className="relative rounded-b-2xl overflow-hidden shadow-2xl border border-t-0 border-gray-800">
-                        <div className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-8 md:p-12 overflow-hidden min-h-[600px]">
-                          {/* Animated Grid Background */}
-                          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,#000,transparent)]" />
-                          
-                          {/* Gradient Orbs */}
-                          <div className="absolute top-1/4 -left-48 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl" />
-                          <div className="absolute bottom-1/4 -right-48 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl" />
+                      <div className="relative rounded-b-xl overflow-hidden shadow-xl border border-t-0 border-gray-200">
+                        <div className="relative bg-gradient-to-br from-blue-50 via-white to-purple-50 p-6 overflow-hidden">
+                          {/* Subtle Background Pattern */}
+                          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(99,102,241,0.05),transparent_50%),radial-gradient(circle_at_70%_80%,rgba(168,85,247,0.05),transparent_50%)]" />
                           
                           {/* Profile Section */}
                           <motion.div
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
                             transition={{ delay: 1.2, type: "spring" }}
-                            className="relative flex flex-col items-center mb-10"
+                            className="relative flex flex-col items-center mb-6"
                           >
-                            <div className="relative mb-6">
-                              <div className="w-28 h-28 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 p-0.5 shadow-2xl">
-                                <div className="w-full h-full rounded-full bg-slate-900 flex items-center justify-center border-4 border-slate-800">
+                            <div className="relative mb-3">
+                              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 p-0.5 shadow-lg">
+                                <div className="w-full h-full rounded-full bg-white flex items-center justify-center">
                                   <img 
                                     src="https://api.dicebear.com/7.x/avataaars/svg?seed=Alex" 
                                     alt="Profile" 
@@ -272,52 +267,41 @@ export default function HomePage() {
                                   />
                                 </div>
                               </div>
-                              <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center border-4 border-slate-900 shadow-lg">
-                                <Check className="w-4 h-4 text-white" strokeWidth={3} />
+                              <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center border-2 border-white shadow-md">
+                                <Check className="w-3 h-3 text-white" strokeWidth={3} />
                               </div>
                             </div>
-                            <h3 className="text-3xl font-bold text-white mb-2">Alex Johnson</h3>
-                            <p className="text-gray-400 mb-4">Digital Product Designer • Creator</p>
-                            <div className="flex items-center gap-4 text-sm text-gray-500">
-                              <div className="flex items-center gap-2">
-                                <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-                                <span>Online</span>
-                              </div>
-                              <span>•</span>
-                              <span>San Francisco, CA</span>
+                            <h3 className="text-xl font-bold text-gray-900 mb-1">Alex Johnson</h3>
+                            <p className="text-sm text-gray-600 mb-2">Digital Product Designer</p>
+                            <div className="flex items-center gap-2 text-xs text-gray-500">
+                              <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
+                              <span>Available for projects</span>
                             </div>
                           </motion.div>
 
                           {/* Links Grid */}
-                          <div className="relative grid gap-3 max-w-2xl mx-auto">
+                          <div className="relative grid gap-2.5 max-w-md mx-auto">
                             {[
                               { 
-                                title: "Portfolio & Case Studies", 
-                                subtitle: "View my latest design work",
+                                title: "Portfolio", 
+                                subtitle: "Latest work",
                                 icon: Palette,
                                 gradient: "from-blue-500 to-cyan-500",
                                 delay: 1.4 
                               },
                               { 
-                                title: "YouTube Channel", 
-                                subtitle: "Design tutorials & tips",
+                                title: "YouTube", 
+                                subtitle: "Design tutorials",
                                 icon: Youtube,
                                 gradient: "from-red-500 to-pink-500",
                                 delay: 1.5 
                               },
                               { 
-                                title: "Shop Design Assets", 
-                                subtitle: "Premium UI kits & templates",
+                                title: "Shop", 
+                                subtitle: "UI kits & assets",
                                 icon: Star,
                                 gradient: "from-purple-500 to-fuchsia-500",
                                 delay: 1.6 
-                              },
-                              { 
-                                title: "Book Consultation", 
-                                subtitle: "1-hour strategy session",
-                                icon: Users,
-                                gradient: "from-emerald-500 to-teal-500",
-                                delay: 1.7 
                               },
                             ].map((link, idx) => {
                               const IconComponent = link.icon;
@@ -329,17 +313,16 @@ export default function HomePage() {
                                   transition={{ delay: link.delay }}
                                   className="group relative"
                                 >
-                                  <div className={`absolute -inset-0.5 bg-gradient-to-r ${link.gradient} opacity-20 group-hover:opacity-40 rounded-2xl transition-opacity duration-300 blur-xl`} />
-                                  <div className="relative bg-slate-800/50 backdrop-blur-xl hover:bg-slate-800/70 rounded-2xl p-5 border border-slate-700/50 hover:border-slate-600 transition-all duration-300 cursor-pointer">
-                                    <div className="flex items-center gap-4">
-                                      <div className={`flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br ${link.gradient} flex items-center justify-center shadow-lg`}>
-                                        <IconComponent className="h-6 w-6 text-white" />
+                                  <div className="relative bg-white hover:bg-gray-50 rounded-xl p-3.5 border border-gray-200 hover:border-gray-300 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-md">
+                                    <div className="flex items-center gap-3">
+                                      <div className={`flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br ${link.gradient} flex items-center justify-center shadow-sm`}>
+                                        <IconComponent className="h-5 w-5 text-white" />
                                       </div>
                                       <div className="flex-1 min-w-0">
-                                        <div className="font-semibold text-white mb-1">{link.title}</div>
-                                        <div className="text-sm text-gray-400">{link.subtitle}</div>
+                                        <div className="font-semibold text-gray-900 text-sm">{link.title}</div>
+                                        <div className="text-xs text-gray-500">{link.subtitle}</div>
                                       </div>
-                                      <ExternalLink className="h-5 w-5 text-gray-500 group-hover:text-gray-300 transition-colors flex-shrink-0" />
+                                      <ArrowRight className="h-4 w-4 text-gray-400 group-hover:text-gray-600 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
                                     </div>
                                   </div>
                                 </motion.div>
@@ -352,13 +335,13 @@ export default function HomePage() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 1.8 }}
-                            className="relative flex justify-center gap-4 mt-10"
+                            className="relative flex justify-center gap-2.5 mt-6"
                           >
                             {[
                               { name: "Instagram", Icon: Instagram, gradient: "from-purple-500 via-pink-500 to-orange-500" },
                               { name: "Twitter", Icon: Twitter, gradient: "from-blue-400 to-blue-600" },
                               { name: "YouTube", Icon: Youtube, gradient: "from-red-500 to-red-600" },
-                              { name: "TikTok", Icon: Music2, gradient: "from-gray-700 to-gray-900" },
+                              { name: "TikTok", Icon: Music2, gradient: "from-gray-800 to-gray-900" },
                             ].map((social, idx) => {
                               const SocialIcon = social.Icon;
                               return (
@@ -367,10 +350,10 @@ export default function HomePage() {
                                   initial={{ scale: 0 }}
                                   animate={{ scale: 1 }}
                                   transition={{ delay: 1.9 + idx * 0.1, type: "spring" }}
-                                  whileHover={{ scale: 1.1, y: -3 }}
-                                  className={`w-12 h-12 rounded-xl bg-gradient-to-br ${social.gradient} shadow-lg hover:shadow-2xl transition-all cursor-pointer flex items-center justify-center`}
+                                  whileHover={{ scale: 1.1, y: -2 }}
+                                  className={`w-10 h-10 rounded-lg bg-gradient-to-br ${social.gradient} shadow-md hover:shadow-lg transition-all cursor-pointer flex items-center justify-center`}
                                 >
-                                  <SocialIcon className="w-5 h-5 text-white" />
+                                  <SocialIcon className="w-4 h-4 text-white" />
                                 </motion.div>
                               );
                             })}
@@ -382,26 +365,26 @@ export default function HomePage() {
                     // Mobile View
                     <div className="relative">
                       {/* Phone Frame */}
-                      <div className="bg-gray-900 rounded-[3rem] p-3 shadow-2xl border-8 border-gray-900">
+                      <div className="bg-gray-900 rounded-[2.5rem] p-2 shadow-2xl border-[6px] border-gray-900">
                         {/* Notch */}
-                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-7 bg-gray-900 rounded-b-2xl" />
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-5 bg-gray-900 rounded-b-xl z-10" />
                         
                         {/* Screen */}
-                        <div className="relative rounded-[2.5rem] overflow-hidden shadow-inner bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 h-[650px] overflow-y-auto">
-                          {/* Background */}
-                          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:2rem_2rem]" />
+                        <div className="relative rounded-[2rem] overflow-hidden shadow-inner bg-gradient-to-br from-blue-50 via-white to-purple-50 h-[520px] overflow-y-auto">
+                          {/* Background Pattern */}
+                          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(99,102,241,0.05),transparent_50%),radial-gradient(circle_at_70%_80%,rgba(168,85,247,0.05),transparent_50%)]" />
                           
-                          <div className="relative p-6">
+                          <div className="relative p-5 pt-8">
                             {/* Profile */}
                             <motion.div
                               initial={{ scale: 0 }}
                               animate={{ scale: 1 }}
                               transition={{ delay: 1.2, type: "spring" }}
-                              className="flex flex-col items-center mb-8"
+                              className="flex flex-col items-center mb-6"
                             >
-                              <div className="relative mb-4">
-                                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 p-0.5 shadow-xl">
-                                  <div className="w-full h-full rounded-full bg-slate-900 flex items-center justify-center border-4 border-slate-800">
+                              <div className="relative mb-3">
+                                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 p-0.5 shadow-lg">
+                                  <div className="w-full h-full rounded-full bg-white flex items-center justify-center">
                                     <img 
                                       src="https://api.dicebear.com/7.x/avataaars/svg?seed=Alex" 
                                       alt="Profile" 
@@ -409,25 +392,24 @@ export default function HomePage() {
                                     />
                                   </div>
                                 </div>
-                                <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-blue-500 rounded-full flex items-center justify-center border-3 border-slate-900">
-                                  <Check className="w-3.5 h-3.5 text-white" strokeWidth={3} />
+                                <div className="absolute -bottom-0.5 -right-0.5 w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center border-2 border-white">
+                                  <Check className="w-2.5 h-2.5 text-white" strokeWidth={3} />
                                 </div>
                               </div>
-                              <h3 className="text-2xl font-bold text-white mb-1">Alex Johnson</h3>
-                              <p className="text-gray-400 text-sm text-center mb-3">Digital Product Designer</p>
-                              <div className="flex items-center gap-2 text-xs text-gray-500">
-                                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
-                                <span>Online</span>
+                              <h3 className="text-base font-bold text-gray-900 mb-0.5">Alex Johnson</h3>
+                              <p className="text-xs text-gray-600 text-center mb-2">Digital Product Designer</p>
+                              <div className="flex items-center gap-1.5 text-[10px] text-gray-500">
+                                <span className="w-1 h-1 bg-emerald-500 rounded-full animate-pulse" />
+                                <span>Available</span>
                               </div>
                             </motion.div>
 
                             {/* Links */}
-                            <div className="space-y-3">
+                            <div className="space-y-2">
                               {[
                                 { title: "Portfolio", icon: Palette, gradient: "from-blue-500 to-cyan-500", delay: 1.4 },
                                 { title: "YouTube", icon: Youtube, gradient: "from-red-500 to-pink-500", delay: 1.5 },
-                                { title: "Shop Assets", icon: Star, gradient: "from-purple-500 to-fuchsia-500", delay: 1.6 },
-                                { title: "Book Call", icon: Users, gradient: "from-emerald-500 to-teal-500", delay: 1.7 },
+                                { title: "Shop", icon: Star, gradient: "from-purple-500 to-fuchsia-500", delay: 1.6 },
                               ].map((link, idx) => {
                                 const IconComponent = link.icon;
                                 return (
@@ -438,13 +420,12 @@ export default function HomePage() {
                                     transition={{ delay: link.delay }}
                                     className="group relative"
                                   >
-                                    <div className={`absolute -inset-0.5 bg-gradient-to-r ${link.gradient} opacity-20 group-hover:opacity-40 rounded-xl transition-opacity blur-lg`} />
-                                    <div className="relative bg-slate-800/50 backdrop-blur-xl rounded-xl p-4 border border-slate-700/50 flex items-center gap-3">
-                                      <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${link.gradient} flex items-center justify-center`}>
-                                        <IconComponent className="h-5 w-5 text-white" />
+                                    <div className="relative bg-white rounded-lg p-3 border border-gray-200 flex items-center gap-2.5 shadow-sm">
+                                      <div className={`w-8 h-8 rounded-md bg-gradient-to-br ${link.gradient} flex items-center justify-center flex-shrink-0`}>
+                                        <IconComponent className="h-4 w-4 text-white" />
                                       </div>
-                                      <span className="font-semibold text-white flex-1">{link.title}</span>
-                                      <ExternalLink className="h-4 w-4 text-gray-500" />
+                                      <span className="font-semibold text-gray-900 flex-1 text-sm">{link.title}</span>
+                                      <ArrowRight className="h-3.5 w-3.5 text-gray-400 flex-shrink-0" />
                                     </div>
                                   </motion.div>
                                 );
@@ -456,13 +437,13 @@ export default function HomePage() {
                               initial={{ opacity: 0 }}
                               animate={{ opacity: 1 }}
                               transition={{ delay: 1.8 }}
-                              className="flex justify-center gap-3 mt-8"
+                              className="flex justify-center gap-2 mt-5"
                             >
                               {[
                                 { Icon: Instagram, gradient: "from-purple-500 via-pink-500 to-orange-500" },
                                 { Icon: Twitter, gradient: "from-blue-400 to-blue-600" },
                                 { Icon: Youtube, gradient: "from-red-500 to-red-600" },
-                                { Icon: Music2, gradient: "from-gray-700 to-gray-900" },
+                                { Icon: Music2, gradient: "from-gray-800 to-gray-900" },
                               ].map((social, idx) => {
                                 const SocialIcon = social.Icon;
                                 return (
@@ -471,9 +452,9 @@ export default function HomePage() {
                                     initial={{ scale: 0 }}
                                     animate={{ scale: 1 }}
                                     transition={{ delay: 1.9 + idx * 0.1, type: "spring" }}
-                                    className={`w-11 h-11 rounded-xl bg-gradient-to-br ${social.gradient} shadow-lg flex items-center justify-center`}
+                                    className={`w-9 h-9 rounded-lg bg-gradient-to-br ${social.gradient} shadow-md flex items-center justify-center`}
                                   >
-                                    <SocialIcon className="w-5 h-5 text-white" />
+                                    <SocialIcon className="w-4 h-4 text-white" />
                                   </motion.div>
                                 );
                               })}
@@ -489,15 +470,15 @@ export default function HomePage() {
                     initial={{ opacity: 0, scale: 0.8, y: 20 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     transition={{ delay: 2, type: "spring" }}
-                    className={`hidden lg:block absolute -bottom-6 ${isMobileView ? "-right-8" : "-right-6"} bg-white rounded-2xl shadow-2xl p-4 border border-gray-200`}
+                    className={`hidden lg:block absolute -bottom-4 ${isMobileView ? "-right-6" : "-right-4"} bg-white rounded-xl shadow-lg p-3 border border-gray-200`}
                   >
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center">
-                        <TrendingUp className="h-6 w-6 text-white" />
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center shadow-sm">
+                        <TrendingUp className="h-5 w-5 text-white" />
                       </div>
                       <div>
-                        <div className="text-2xl font-bold text-gray-900">3.4K</div>
-                        <div className="text-xs text-gray-600">Clicks today</div>
+                        <div className="text-xl font-bold text-gray-900">2.4K</div>
+                        <div className="text-[10px] text-gray-600">Clicks today</div>
                       </div>
                     </div>
                   </motion.div>
