@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import { ArrowRight, Calendar, Clock } from "lucide-react";
 

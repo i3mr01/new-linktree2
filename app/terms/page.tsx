@@ -58,7 +58,7 @@ export default function TermsPage() {
                   <li>Use the materials for any commercial purpose or for any public display</li>
                   <li>Attempt to decompile or reverse engineer any software contained in Linkly</li>
                   <li>Remove any copyright or other proprietary notations from the materials</li>
-                  <li>Transfer the materials to another person or "mirror" the materials on any other server</li>
+                  <li>Transfer the materials to another person or &quot;mirror&quot; the materials on any other server</li>
                 </ul>
               </section>
 
@@ -110,8 +110,8 @@ export default function TermsPage() {
               <section className="mb-8">
                 <h2 className="text-2xl font-bold mb-4 text-gray-900">Disclaimer</h2>
                 <p className="text-gray-600 leading-relaxed">
-                  Your use of the service is at your sole risk. The service is provided on an "AS IS" and 
-                  "AS AVAILABLE" basis. The service is provided without warranties of any kind, whether 
+                  Your use of the service is at your sole risk. The service is provided on an &quot;AS IS&quot; and 
+                  &quot;AS AVAILABLE&quot; basis. The service is provided without warranties of any kind, whether 
                   express or implied, including, but not limited to, implied warranties of merchantability, 
                   fitness for a particular purpose, non-infringement or course of performance.
                 </p>
@@ -140,7 +140,7 @@ export default function TermsPage() {
                 <p className="text-gray-600 leading-relaxed">
                   We reserve the right, at our sole discretion, to modify or replace these Terms at any 
                   time. We will provide notice of any changes by posting the new Terms on this page and 
-                  updating the "Last updated" date.
+                  updating the &quot;Last updated&quot; date.
                 </p>
               </section>
 

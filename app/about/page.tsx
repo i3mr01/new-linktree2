@@ -27,8 +27,8 @@ export default function AboutPage() {
                 Linkly
               </span>
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              We're on a mission to help creators share everything they create from one simple link.
+              <p className="text-lg sm:text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              We&apos;re on a mission to help creators share everything they create from one simple link.
             </p>
           </motion.div>
 
@@ -55,7 +55,7 @@ export default function AboutPage() {
                 </p>
                 <p className="text-gray-600 leading-relaxed">
                   Today, thousands of creators, influencers, and businesses use Linkly to connect their audience 
-                  with everything they create. And we're just getting started.
+                  with everything they create. And we&apos;re just getting started.
                 </p>
               </div>
             </div>

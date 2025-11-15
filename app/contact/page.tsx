@@ -48,7 +48,7 @@ export default function ContactPage() {
               </span>
             </h1>
             <p className="text-lg sm:text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Have a question or feedback? We'd love to hear from you.
+              Have a question or feedback? We&apos;d love to hear from you.
             </p>
           </motion.div>
 
@@ -72,7 +72,7 @@ export default function ContactPage() {
                     <Send className="h-8 w-8 text-green-600" />
                   </div>
                   <h3 className="text-xl font-bold text-gray-900 mb-2">Message sent!</h3>
-                  <p className="text-gray-600">We'll get back to you soon.</p>
+                  <p className="text-gray-600">We&apos;ll get back to you soon.</p>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
