@@ -162,7 +162,7 @@ export default function HomePage() {
 
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-stretch sm:items-center hero-element px-4 w-full sm:w-auto max-w-md sm:max-w-none mx-auto">
                 <Link
-                  href="/login"
+                  href="/signup"
                   className="group relative px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold text-base sm:text-lg hover:shadow-2xl hover:shadow-blue-500/25 hover:scale-105 transition-all duration-300 overflow-hidden text-center"
                 >
                   <span className="relative z-10 flex items-center justify-center gap-2">
@@ -550,7 +550,7 @@ export default function HomePage() {
               </div>
               <div>
                 <Link
-                  href="/login"
+                  href="/signup"
                   className="inline-flex items-center gap-2 px-10 py-5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white rounded-2xl font-bold text-lg hover:shadow-2xl hover:shadow-purple-500/50 hover:scale-105 transition-all duration-300"
                 >
                   Start for free
@@ -616,7 +616,7 @@ export default function HomePage() {
                   ))}
                 </ul>
                 <Link
-                  href="/login"
+                  href="/signup"
                   className="block w-full text-center px-6 py-4 bg-white text-blue-600 rounded-xl font-semibold hover:bg-gray-100 transition-colors"
                 >
                   Get Started Free
@@ -657,7 +657,7 @@ export default function HomePage() {
                     />
                   </div>
                   <Link
-                    href="/login"
+                    href="/signup"
                     className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-bold text-base sm:text-lg hover:shadow-xl hover:shadow-blue-500/25 hover:scale-105 transition-all duration-300 whitespace-nowrap text-center"
                   >
                     Claim your link

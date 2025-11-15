@@ -20,8 +20,8 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: "Features", href: "#features" },
-    { name: "Pricing", href: "#pricing" },
+    { name: "Features", href: "/#features" },
+    { name: "Pricing", href: "/#pricing" },
     { name: "FAQ", href: "/faq" },
   ];
 
@@ -84,7 +84,7 @@ export default function Navbar() {
                   Log in
                 </Link>
                 <Link
-                  href="/login"
+                  href="/signup"
                   className="px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full hover:shadow-lg hover:shadow-blue-500/25 hover:scale-105 transition-all duration-200 font-semibold text-sm"
                 >
                   Get Started Free
@@ -141,7 +141,7 @@ export default function Navbar() {
                       Log in
                     </Link>
                     <Link
-                      href="/login"
+                      href="/signup"
                       className="block w-full text-center px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-medium"
                       onClick={() => setMobileMenuOpen(false)}
                     >
