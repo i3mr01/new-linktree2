@@ -16,6 +16,10 @@ import {
   Star,
   TrendingUp,
   Users,
+  Instagram,
+  Twitter,
+  Youtube,
+  Music2,
 } from "lucide-react";
 import gsap from "gsap";
 
@@ -309,22 +313,25 @@ export default function HomePage() {
                         className="relative flex justify-center gap-3 mt-8"
                       >
                         {[
-                          { name: "Instagram", gradient: "from-purple-500 via-pink-500 to-orange-500", icon: "📷" },
-                          { name: "Twitter", gradient: "from-blue-400 to-blue-600", icon: "🐦" },
-                          { name: "YouTube", gradient: "from-red-500 to-red-600", icon: "▶️" },
-                          { name: "TikTok", gradient: "from-gray-800 to-gray-900", icon: "🎵" },
-                        ].map((social, idx) => (
-                          <motion.div
-                            key={social.name}
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            transition={{ delay: 1.9 + idx * 0.1, type: "spring" }}
-                            whileHover={{ scale: 1.1, y: -2 }}
-                            className={`w-11 h-11 rounded-xl bg-gradient-to-br ${social.gradient} shadow-lg hover:shadow-xl transition-all cursor-pointer flex items-center justify-center text-lg`}
-                          >
-                            {social.icon}
-                          </motion.div>
-                        ))}
+                          { name: "Instagram", gradient: "from-purple-500 via-pink-500 to-orange-500", Icon: Instagram },
+                          { name: "Twitter", gradient: "from-blue-400 to-blue-600", Icon: Twitter },
+                          { name: "YouTube", gradient: "from-red-500 to-red-600", Icon: Youtube },
+                          { name: "TikTok", gradient: "from-gray-800 to-gray-900", Icon: Music2 },
+                        ].map((social, idx) => {
+                          const SocialIcon = social.Icon;
+                          return (
+                            <motion.div
+                              key={social.name}
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              transition={{ delay: 1.9 + idx * 0.1, type: "spring" }}
+                              whileHover={{ scale: 1.1, y: -2 }}
+                              className={`w-11 h-11 rounded-xl bg-gradient-to-br ${social.gradient} shadow-lg hover:shadow-xl transition-all cursor-pointer flex items-center justify-center`}
+                            >
+                              <SocialIcon className="w-5 h-5 text-white" />
+                            </motion.div>
+                          );
+                        })}
                       </motion.div>
                     </div>
                   </div>
